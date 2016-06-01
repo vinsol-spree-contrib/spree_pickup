@@ -1,5 +1,4 @@
 SpreePickup
-===========
 
 Introduction goes here.
 
