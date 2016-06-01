@@ -1,0 +1,64 @@
+<div data-hook="admin_pickup_locations_form_fields">
+  <div class="row">
+    <div class="col-md-9" data-hook="pickup_location_names">
+      <div data-hook="pickup_location_name">
+        <%= f.field_container :name, class: ['form-group']  do %>
+        <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
+        <%= f.text_field :name, class: 'form-control', required: true %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_address1">
+    <%= f.label :address1, Spree.t(:street_address) %>
+    <%= f.text_field :address1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_city">
+    <%= f.label :city, Spree.t(:city) %>
+    <%= f.text_field :city, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_address2">
+    <%= f.label :address2, Spree.t(:street_address_2) %>
+    <%= f.text_field :address2, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_zipcode">
+    <%= f.label :zipcode, Spree.t(:zip) %>
+    <%= f.text_field :zipcode, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_phone">
+    <%= f.label :phone, Spree.t(:phone) %>
+    <%= f.phone_field :phone, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_country">
+    <%= f.label :country_id, Spree.t(:country) %>
+    <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2' } %></span>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_country">
+    <%= f.label :functioning_details, Spree.t(:functioning_details) %>
+    <span id="functioning_details"><%= f.text_area :functioning_details, class: 'form-control'%></span>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_state">
+    <% if f.object.country %>
+      <%= f.label :state_id, Spree.t(:state) %>
+      <span id="state" class="region">
+        <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+      </span>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :head do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      $('span#country .select2').on('change', function() { update_state(''); });
+    });
+  <% end %>
+<% end %>
