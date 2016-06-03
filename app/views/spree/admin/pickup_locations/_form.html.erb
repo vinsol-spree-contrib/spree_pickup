@@ -1,3 +1,11 @@
+<% content_for :head do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      $('span#country .select2').on('change', function() { update_state(''); });
+    });
+  <% end %>
+<% end %>
+
 <div data-hook="admin_pickup_locations_form_fields">
   <div class="row">
     <div class="col-md-9" data-hook="pickup_location_names">
@@ -15,14 +23,14 @@
     <%= f.text_field :address1, class: 'form-control' %>
   </div>
 
-  <div class="form-group" data-hook="pickup_location_city">
-    <%= f.label :city, Spree.t(:city) %>
-    <%= f.text_field :city, class: 'form-control' %>
-  </div>
-
   <div class="form-group" data-hook="pickup_location_address2">
     <%= f.label :address2, Spree.t(:street_address_2) %>
     <%= f.text_field :address2, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_city">
+    <%= f.label :city, Spree.t(:city) %>
+    <%= f.text_field :city, class: 'form-control' %>
   </div>
 
   <div class="form-group" data-hook="pickup_location_zipcode">
@@ -55,10 +63,3 @@
   </div>
 </div>
 
-<% content_for :head do %>
-  <%= javascript_tag do %>
-    $(document).ready(function(){
-      $('span#country .select2').on('change', function() { update_state(''); });
-    });
-  <% end %>
-<% end %>
