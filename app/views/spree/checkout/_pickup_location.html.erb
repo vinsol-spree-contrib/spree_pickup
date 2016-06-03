@@ -1,0 +1,48 @@
+<p class="form-group" >PickUp Order
+  <input type="checkbox" class = "pickup-checkbox" name="pickup" >
+</p> <br/>
+<div style="display:none" class="col-sm-6" data-hook="pickup_wrapper">
+
+  <div class="form-group" data-hook="pickup_location_country">
+    <%= label_tag :country_id, Spree.t(:country) %>
+    <span id="country">
+      <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: Spree::Country.default.id}, { class: "select22" } %>
+    </span>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_state">
+      <%= label_tag :state_id, Spree.t(:state) %>
+      <span id="state" class="region">
+        <%= collection_select :pickup_location, :state_id, Spree::Country.default.states, :id, :name, { include_blank: true }, {class: "select22", style: ""} %>
+      </span>
+  </div>
+
+  <div class='col-md-12' data-hook= 'pickup_locations_wrapper'></div>
+
+
+  <div class='col-md-12' data-hook= 'map_wrapper' id='map' style="height:350px"></div>
+</div>
+
+
+
+<% content_for :head do %>
+
+  <%=javascript_include_tag "spree/frontend/pickup_checkout"%>
+  <%=javascript_include_tag "spree/frontend/pickup_locations_getter"%>
+  <%=javascript_include_tag "spree/frontend/map_initializer"%>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.secrets.google_map_key%>"
+    ></script>
+  <%= javascript_tag do %>
+    $(function(){
+      mI = new MapInitializer('<%#=Spree::Country.default.name%>');
+      mI.init();
+      $("span#country .select22").on("change", function(event) {update_state("") });
+      var pC = new PickupCheckout($('[data-hook="pickup_wrapper"]'), $('[data-hook="shipping_fieldset_wrapper"]'));
+      var pLG = new PickupLocationGetter('<%=api_pickup_locations_search_path %>');
+      pLG.init();
+      pC.init();
+    });
+  <% end %>
+<% end %>
+

@@ -12,12 +12,16 @@ module Spree
     geocoded_by :full_address
 
     ##Callbacks
-    before_save :geocode, unless: -> {geocoded?}
+    before_save :geocode, if: :address_changed?
 
     private
 
+      def address_changed?
+        address1_changed? || address2_changed? || city_changed? || state_changed? || country_changed? || zipcode_changed?
+      end
+
       def full_address
-        [address1, address2, city, state.name, country.name].join(', ')
+        [address1, address2, zipcode, city, state.name, country.name].compact.join(', ')
       end
   end
 
