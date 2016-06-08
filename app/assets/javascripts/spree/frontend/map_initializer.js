@@ -14,7 +14,7 @@ MapInitializer.prototype.init = function() {
 MapInitializer.prototype.setMarker = function(collection) {
   var _this = this;
   $.each(collection, function(index, value) {
-    marker = _this.addMarker(value);
+    marker = _this.addMarker(index, value);
     _this.addInfoWindow(marker, value.name);
   })
 };
@@ -28,15 +28,20 @@ MapInitializer.prototype.addInfoWindow = function(marker, info) {
   });
 };
 
-MapInitializer.prototype.addMarker = function(object) {
+MapInitializer.prototype.addMarker = function(index, object) {
+  var _this = this;
   var marker = new google.maps.Marker({
     position: {lat: object.latitude, lng: object.longitude},
-    icon: 'https://maps.google.com/mapfiles/kml/paddle/blu-blank.png',
+    icon: _this.imageUrlBuilder(++index),
     map: this.map
   });
   return marker;
 };
 
+MapInitializer.prototype.imageUrlBuilder = function(value) {
+  var image_url = "https://images-eu.ssl-images-amazon.com/images/G/31/x-site/cvs/map/location_" + value + "._CB138359918_.gif"
+  return image_url;
+};
 
 MapInitializer.prototype.setCenter = function() {
   var _this = this;

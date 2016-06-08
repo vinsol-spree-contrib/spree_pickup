@@ -1,29 +1,51 @@
-<p class="form-group" >PickUp Order
-  <input type="checkbox" class = "pickup-checkbox" name="pickup" >
-</p> <br/>
-<div style="display:none" class="col-sm-6" data-hook="pickup_wrapper">
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style='width:90%'>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid bd-example-row">
+          <div class='row'>
+            <div class= 'col-md-6'>
+              <div data-hook="pickup_wrapper">
 
-  <div class="form-group" data-hook="pickup_location_country">
-    <%= label_tag :country_id, Spree.t(:country) %>
-    <span id="country">
-      <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: Spree::Country.default.id}, { class: "select22" } %>
-    </span>
+                <div class="form-group" data-hook="pickup_location_country">
+                  <%= label_tag :country_id, Spree.t(:country) %>
+                  <span id="country">
+                    <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: Spree::Country.default.id}, { class: "select22" } %>
+                  </span>
+                </div>
+
+                <div class="form-group" data-hook="pickup_location_state">
+                    <%= label_tag :state_id, Spree.t(:state) %>
+                    <span id="state" class="region">
+                      <%= collection_select :pickup_location, :state_id, Spree::Country.default.states, :id, :name, { include_blank: true }, {class: "select22", style: ""} %>
+                    </span>
+                </div>
+                  <%=form.hidden_field :pickup_location_id, class: 'pickup_id'%>
+
+                <div class='col-md-12' data-hook= 'pickup_locations_wrapper' style= "max-height:400px;overflow-y:auto">
+              </div>
+            </div>
+          </div>
+
+            <div class= 'col-md-6'>
+              <div class='col-md-12' data-hook= 'map_wrapper' id='map' style="height:350px"></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
   </div>
-
-  <div class="form-group" data-hook="pickup_location_state">
-      <%= label_tag :state_id, Spree.t(:state) %>
-      <span id="state" class="region">
-        <%= collection_select :pickup_location, :state_id, Spree::Country.default.states, :id, :name, { include_blank: true }, {class: "select22", style: ""} %>
-      </span>
-  </div>
-
-  <div class='col-md-12' data-hook= 'pickup_locations_wrapper'></div>
-
-
-  <div class='col-md-12' data-hook= 'map_wrapper' id='map' style="height:350px"></div>
 </div>
-
-
 
 <% content_for :head do %>
 
@@ -42,6 +64,12 @@
       var pLG = new PickupLocationGetter('<%=api_pickup_locations_search_path %>');
       pLG.init();
       pC.init();
+
+      $('body').on('click', ".btn-warning", function(event) {
+        val = $(event.currentTarget).parent().attr('data-id')
+        $('.pickup_id').val(val);
+      });
+
     });
   <% end %>
 <% end %>
