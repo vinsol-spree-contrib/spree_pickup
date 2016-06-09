@@ -5,6 +5,7 @@ function PickupCheckout (pickupDiv, shippingDiv) {
 
 PickupCheckout.prototype.init = function() {
   var order_use_billing = this.shippingDiv.find('#order_use_billing');
+  this.shippingDiv.find('[type=hidden]').attr('disabled', true)
   order_use_billing.attr('checked', false);
   this.bindEvent();
 };
@@ -28,7 +29,7 @@ PickupCheckout.prototype.bindEvent = function() {
 };
 
 PickupCheckout.prototype.togglePickupLocation = function(val) {
-  // val ? this.pickupDiv.removeClass('hide') : this.pickupDiv.addClass('hide');
+  val ? this.pickupDiv.removeClass('hide') : this.pickupDiv.addClass('hide');
   val ? $('#myModal').modal('show') : $('#myModal').modal('hide');
 };
 

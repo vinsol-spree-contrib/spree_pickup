@@ -6,9 +6,10 @@ module Spree
     belongs_to :address
 
     ##Validations
-    # validates :name, presence: true
+    validates :name, presence: true
 
     geocoded_by :full_address
+
     ##Callbacks
     after_validation :update_geocode, if: ->{ my_address_changed? || address.new_record? }
 
@@ -18,7 +19,8 @@ module Spree
 
       def update_geocode
         location = self.geocode
-        self.update_columns(longitude: location.last, latitude: location.first)
+        self.longitude = location.last
+        self.latitude = location.first
       end
 
       def my_address_changed?

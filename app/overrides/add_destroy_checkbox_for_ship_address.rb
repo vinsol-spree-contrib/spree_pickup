@@ -1,0 +1,1 @@
+add_destroy_checkbox_for_ship_address.rb

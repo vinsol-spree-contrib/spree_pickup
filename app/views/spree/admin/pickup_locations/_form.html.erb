@@ -1,26 +1,14 @@
 <div data-hook="admin_pickup_locations_form_fields">
-  <%=f.fields_for :address do |f|%>
+  <div class="row">
+    <div class="col-md-9" data-hook="pickup_location_names">
+      <div data-hook="pickup_location_name">
+          <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
+          <%= f.text_field :name, class: 'form-control', required: true %>
+      </div>
+    </div>
+  </div>
 
-  <div class="row">
-    <div class="col-md-9" data-hook="pickup_location_names">
-      <div data-hook="pickup_location_name">
-        <%#= f.field_container :first_name, class: ['form-group']  do %>
-        <%= f.label :first_name, Spree.t(:first_name) %> <span class="required">*</span><br />
-        <%= f.text_field :first_name, class: 'form-control', required: true %>
-        <%# end %>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-9" data-hook="pickup_location_names">
-      <div data-hook="pickup_location_name">
-        <%#= f.field_container :last_name, class: ['form-group']  do %>
-        <%= f.label :last_name, Spree.t(:last_name) %> <span class="required">*</span><br />
-        <%= f.text_field :last_name, class: 'form-control', required: true %>
-        <%# end %>
-      </div>
-    </div>
-  </div>
+  <%=f.fields_for :address do |f|%>
   <div class="form-group" data-hook="pickup_location_address1">
     <%= f.label :address1, Spree.t(:street_address) %>
     <%= f.text_field :address1, class: 'form-control' %>

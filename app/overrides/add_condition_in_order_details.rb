@@ -10,7 +10,6 @@ Deface::Override.new(
         <%else%>
           <div class="col-md-3" data-hook="order-ship-address">
             <h4>Pick up Address <%= link_to "(#{Spree.t(:edit)})", checkout_state_path(:address) unless order.completed? %></h4>
-            <%debugger%>
             <%= render "spree/shared/address", address: order.pickup_location.address %>
           </div>
         <%end%>

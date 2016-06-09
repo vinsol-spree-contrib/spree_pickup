@@ -15,6 +15,23 @@ Deface::Override.new(
         <%= link_to Spree.t(:ship), "javascript:;", class: "ship pull-right btn btn-success", data: { "shipment-number" => shipment.number } %>
         <div class="clearfix"></div>
       <% end %>
+
+      <% if((shipment.shipped? || shipment.pickup_ready?) and can?(:update, shipment)) %>
+        <%= link_to "Delivered", "javascript:;", class: "deliver pull-right btn btn-success", data: { "shipment-number" => shipment.number } %>
+        <div class="clearfix"></div>
+      <% end %>
+
+
+      <% if(@order.pickup? && (shipment.pickup_shipped? || shipment.ready?) && can?(:update, shipment)) %>
+        <%= link_to "Pick up Ready", "javascript:;", class: "pickup_ready pull-right btn btn-success", data: { "shipment-number" => shipment.number } %>
+        <div class="clearfix"></div>
+      <% end %>
+
+      <% if(@order.pickup? && shipment.ready? && can?(:update, shipment)) %>
+        <%= link_to "Ship to Pickup Location", "javascript:;", class: "pickup_ship pull-right btn btn-success", data: { "shipment-number" => shipment.number } %>
+        <div class="clearfix"></div>
+      <% end %>
+
     </h1>
   </div>
 '

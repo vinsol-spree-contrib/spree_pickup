@@ -1,3 +1,16 @@
+<div class="col-sm-6 hide" data-hook="pickup_fieldset_wrapper">
+  <div class="panel panel-default" id="pickup" data-hook>
+    <div class="panel-heading">
+      <h3 class="panel-title">Selected Pick Up Location</h3>
+    </div>
+    <div class="panel-body">
+      <p class="field checkbox" data-hook="pickup-content">
+
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- Modal -->
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" style='width:90%'>
@@ -52,6 +65,7 @@
   <%=javascript_include_tag "spree/frontend/pickup_checkout"%>
   <%=javascript_include_tag "spree/frontend/pickup_locations_getter"%>
   <%=javascript_include_tag "spree/frontend/map_initializer"%>
+  <%=javascript_include_tag "spree/frontend/modal_builder"%>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.secrets.google_map_key%>"
     ></script>
@@ -60,17 +74,10 @@
       mI = new MapInitializer('<%#=Spree::Country.default.name%>');
       mI.init();
       $("span#country .select22").on("change", function(event) {update_state("") });
-      var pC = new PickupCheckout($('[data-hook="pickup_wrapper"]'), $('[data-hook="shipping_fieldset_wrapper"]'));
+      var pC = new PickupCheckout($('[data-hook="pickup_fieldset_wrapper"]'), $('[data-hook="shipping_fieldset_wrapper"]'));
       var pLG = new PickupLocationGetter('<%=api_pickup_locations_search_path %>');
       pLG.init();
       pC.init();
-
-      $('body').on('click', ".btn-warning", function(event) {
-        val = $(event.currentTarget).parent().attr('data-id')
-        $('.pickup_id').val(val);
-      });
-
     });
   <% end %>
 <% end %>
-

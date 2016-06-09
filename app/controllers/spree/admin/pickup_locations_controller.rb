@@ -8,6 +8,16 @@ module Spree
         @pickup_locations = @pickup_locations.includes(address: [:state, :country])
       end
 
+      def create
+        params[:pickup_location][:address_attributes][:name_not_require] = true
+        super
+      end
+
+      def update
+        params[:pickup_location][:address_attributes][:name_not_require] = true
+        super
+      end
+
       private
 
         def set_country

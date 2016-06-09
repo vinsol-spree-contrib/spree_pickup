@@ -1,5 +1,9 @@
 Spree::Shipment.class_eval do
 
+  scope :delivered, -> { with_state('delivered') }
+  scope :pickup_shipped, -> { with_state('pickup_shipped') }
+  scope :pickup_ready, -> { with_state('pickup_ready') }
+
   state_machine do
 
     event :ship do
@@ -22,16 +26,21 @@ Spree::Shipment.class_eval do
     end
 
     after_transition from: :canceled, to: [:pickup_ready, :pickup_shipped], do: :after_resume
+    after_transition to: [:pickup_ready, :deliver], do: :update_order_shipment
 
   end
 
-  protected
+  private
     def can_shipped?
       order.ship_address_id.present?
     end
 
     def can_pickup_shipped?
       order.pickup_location_id.present?
+    end
+
+    def update_order_shipment
+      Spree::ShipmentHandler.factory(self).send :update_order_shipment_state
     end
 
 end
