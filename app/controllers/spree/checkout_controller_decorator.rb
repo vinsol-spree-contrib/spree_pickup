@@ -14,7 +14,15 @@ module Spree
       # if the user has a default address, a callback takes care of setting
       # that; but if he doesn't, we need to build an empty one here
       @order.bill_address ||= Address.build_default
-      @order.ship_address ||= Address.build_default if @order.checkout_steps.include?('delivery') && !params[:order].try(:[], :pickup_location_id) && params[:order].try(:[], :ship_address_attributes)
+      if @order.checkout_steps.include?('delivery')
+        if !params[:order].try(:[], :pickup_location_id) && params[:order].try(:[], :ship_address_attributes)
+          @order.ship_address ||= Address.build_default
+        elsif(params[:action].eql?('edit'))
+          @order.ship_address ||= Address.build_default
+        end
+      end
     end
+
+
   end
 end

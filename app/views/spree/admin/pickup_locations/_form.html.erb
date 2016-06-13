@@ -48,10 +48,23 @@
   </div>
   <%end%>
 
-  <div class="form-group" data-hook="pickup_location_country">
-    <%= f.label :functioning_details, Spree.t(:functioning_details) %>
-    <span id="functioning_details"><%= f.text_area :functioning_details, class: 'form-control'%></span>
+
+  <%= f.field_container :open_day_ids, class: ['form-group'] do %>
+    <%= f.label :open_day_ids, 'Open Days' %>
+    <%= f.select :open_day_ids, Date::DAYNAMES.zip((0..6).to_a), {}, { :multiple => true, :class => "select2" } %>
+  <% end %>
+
+  <div class="form-group col-md-6">
+    <%= f.label :start_time %>
+    <%= f.time_field :start_time %>
   </div>
+  <div class="form-group col-md-6">
+    <%= f.label :end_time %>
+    <%= f.time_field :end_time %>
+  </div>
+
+
+
 
 </div>
 

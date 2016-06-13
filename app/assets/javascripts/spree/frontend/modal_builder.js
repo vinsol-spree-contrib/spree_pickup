@@ -13,7 +13,6 @@ ModalBuilder.prototype.bindEvent = function() {
 };
 
 ModalBuilder.prototype.setPickupValue = function(event) {
-  debugger
   var pickupObject = $(event.currentTarget).parents('.pick-up-div').data('object')
   $('.pickup_id').val(pickupObject.id);
   this.createSelectedLocationContent(pickupObject);
@@ -22,10 +21,10 @@ ModalBuilder.prototype.setPickupValue = function(event) {
 ModalBuilder.prototype.createSelectedLocationContent = function(pickupObject) {
   content = pickupObject.address.first_name + " " + pickupObject.address.last_name + " "  + this.addressBuilder(pickupObject.address);
   var pickupContentDiv = $('[data-hook="pickup-content"]');
+  pickupContentDiv.empty();
   pickupContentDiv.append($('<div/>', {text: content}));
   $('[data-hook="pickup_fieldset_wrapper"]').removeClass('hide');
   $('#myModal').modal('hide')
-  debugger
 };
 
 ModalBuilder.prototype.initializeModal = function() {

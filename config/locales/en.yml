@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+  spree:
+    shipment_states:
+      delivered: delivered
+      pickup_ready: pickup ready
+      pickup_shipped: pickup shipped

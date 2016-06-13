@@ -42,7 +42,7 @@
                       <%= collection_select :pickup_location, :state_id, Spree::Country.default.states, :id, :name, { include_blank: true }, {class: "select22", style: ""} %>
                     </span>
                 </div>
-                  <%=form.hidden_field :pickup_location_id, class: 'pickup_id'%>
+                  <%=f.hidden_field :pickup_location_id, class: 'pickup_id'%>
 
                 <div class='col-md-12' data-hook= 'pickup_locations_wrapper' style= "max-height:400px;overflow-y:auto">
               </div>
@@ -76,8 +76,8 @@
     $(function(){
       mI = new MapInitializer('<%#=Spree::Country.default.name%>');
       mI.init();
-      $("span#country-select .select22").on("change", function(event) {update_state("") });
-      var pC = new PickupCheckout($('[data-hook="pickup_fieldset_wrapper"]'), $('[data-hook="shipping_fieldset_wrapper"]'));
+      $("span#country-select .select22").on("change", function(event) {update_states("") });
+      var pC = new PickupCheckout($('[data-hook="pickup_fieldset_wrapper"]'), $('[data-hook="ship_address_wrapper"]'));
       var pLG = new PickupLocationGetter('<%=api_pickup_locations_search_path %>');
       pLG.init();
       pC.init();

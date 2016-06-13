@@ -17,7 +17,7 @@ Deface::Override.new(
       <% end %>
 
       <% if((shipment.shipped? || shipment.pickup_ready?) and can?(:update, shipment)) %>
-        <%= link_to "Delivered", "javascript:;", class: "deliver pull-right btn btn-success", data: { "shipment-number" => shipment.number } %>
+        <%= link_to "Deliver", "javascript:;", class: "deliver pull-right btn btn-success", data: { "shipment-number" => shipment.number } %>
         <div class="clearfix"></div>
       <% end %>
 

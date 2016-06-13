@@ -1,7 +1,7 @@
 function PickupLocationGetter(path) {
   this.path = path
   this.stateSelect = $('#state .select22');
-  this.countrySelect = $('#country .select22');
+  this.countrySelect = $('#country-select .select22');
 }
 
 
@@ -15,6 +15,7 @@ PickupLocationGetter.prototype.bindEvent = function() {
     var s_id = _this.stateSelect.val();
     var c_id = _this.countrySelect.val();
     path = _this.buildPath(s_id, c_id);
+    debugger
     $.get(path, function(data, status) {
       _this.initializeModalBuilder(data);
       _this.initializeMap(data);

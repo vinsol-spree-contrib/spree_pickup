@@ -6,7 +6,8 @@ class CreateSpreePickupLocations < ActiveRecord::Migration
       t.string   :phone
       t.float    :latitude
       t.float    :longitude
-      t.text     :functioning_details
+      t.time     :start_time
+      t.time     :end_time
       t.timestamps
     end
   end
