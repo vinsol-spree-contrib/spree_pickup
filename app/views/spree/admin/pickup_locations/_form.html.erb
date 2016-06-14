@@ -9,6 +9,17 @@
   </div>
 
   <%=f.fields_for :address do |f|%>
+
+  <div class="form-group" data-hook="pickup_location_first_name">
+    <%= f.label :first_name, 'First Name' %>
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_last_name">
+    <%= f.label :last_name, 'Last Name' %>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+
   <div class="form-group" data-hook="pickup_location_address1">
     <%= f.label :address1, Spree.t(:street_address) %>
     <%= f.text_field :address1, class: 'form-control' %>

@@ -5,7 +5,7 @@ Spree::Stock::Estimator.class_eval do
       calculator = ship_method.calculator
       begin
         ship_method.available_to_display(display_filter) && ship_method.pickupable &&
-        ship_method.include?(order.ship_address || order.pickup_location.address ) &&
+        ship_method.include?(order.ship_address || order.pickup_address ) &&
         calculator.available?(package) &&
         (calculator.preferences[:currency].blank? ||
          calculator.preferences[:currency] == currency)

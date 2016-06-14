@@ -6,7 +6,7 @@ module Spree
 
     ##Associations
     belongs_to :address
-    has_many :timings, dependent: :destroy
+    has_many :timings, dependent: :destroy, class_name: 'Spree::Timing'
 
     ##Validations
     validates :longitude, :latitude, :name, :address, :start_time, :end_time, presence: true
@@ -21,36 +21,40 @@ module Spree
 
     accepts_nested_attributes_for :address
 
-    private
 
-      def set_open_day_ids
-        self.open_day_ids = timings.map(&:day_id)
-      end
 
-      def create_timings
-        self.timings.delete_all
-        self.timings = (open_day_ids.tap(&:shift).map{|i| Timing.new(day_id: i)})
-      end
+    def set_open_day_ids
+      self.open_day_ids = timings.map(&:day_id)
+    end
 
-      def update_geocode
-        location = self.geocode
-        self.longitude = location.try :last
-        self.latitude = location.try :first
-      end
+    def create_timings
+      self.timings.delete_all
+      self.timings = (open_day_ids.tap(&:shift).map{|i| Timing.new(day_id: i)})
+    end
 
-      def my_address_changed?
-        address = self.address
-        address.address1_changed? || address.address2_changed? || address.city_changed? || address.state_id_changed? || address.country_id_changed? || address.zipcode_changed?
-      end
+    def update_geocode
+      location = self.geocode
+      self.longitude = location.try :last
+      self.latitude = location.try :first
+    end
 
-      def full_address
-        address = self.address
-        [address.address1, address.address2, address.zipcode, address.city, address.state.name, address.country.name].compact.join(', ')
-      end
+    def my_address_changed?
+      address = self.address
+      address.address1_changed? || address.address2_changed? || address.city_changed? || address.state_id_changed? || address.country_id_changed? || address.zipcode_changed?
+    end
 
-      def end_time_must_be_greater_than_start_time
-        errors[:end_time] << "must be greater than start time" if start_time > end_time
-      end
+    def full_address
+      address = self.address
+      [address.address1, address.address2, address.zipcode, address.city, address.state.name, address.country.name].compact.join(', ')
+    end
+
+    def end_time_must_be_greater_than_start_time
+      errors[:end_time] << "must be greater than start time" if start_time > end_time
+    end
+
+    private :set_open_day_ids, :create_timings, :my_address_changed?, :full_address,
+            :end_time_must_be_greater_than_start_time, :update_geocode
+
   end
 
 end

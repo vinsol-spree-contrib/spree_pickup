@@ -30,17 +30,18 @@ Spree::Shipment.class_eval do
 
   end
 
-  private
-    def can_shipped?
-      order.ship_address_id.present?
-    end
+  def can_shipped?
+    order.can_ship?
+  end
 
-    def can_pickup_shipped?
-      order.pickup_location_id.present?
-    end
+  def can_pickup_shipped?
+    order.pickup_location_id.present?
+  end
 
-    def update_order_shipment
-      Spree::ShipmentHandler.factory(self).send :update_order_shipment_state
-    end
+  def update_order_shipment
+    Spree::ShipmentHandler.factory(self).send :update_order_shipment_state
+  end
+
+  private :can_shipped?, :can_pickup_shipped?, :update_order_shipment
 
 end
