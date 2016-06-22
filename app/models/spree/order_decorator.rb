@@ -20,15 +20,14 @@ Spree::Order.class_eval do
 
   def ensure_pickup_or_ship_address_present
     unless((pickup_location && !ship_address) || (!pickup_location && ship_address))
-      errors[:base] << "Either Ship Address or Pickup Address must be present"
+      errors[:base] << 'Either Ship Address or Pickup Address must be present'
     end
   end
 
   def has_available_shipment
-    return unless has_step?("delivery")
+    return unless has_step?('delivery')
     return unless has_step?('address') && address?
     return unless pickup_location_id.blank? && ship_address && ship_address.valid?
-    # errors.add(:base, :no_shipping_methods_available) if available_shipping_methods.empty?
   end
 
   private :ensure_pickup_or_ship_address_present, :has_available_shipment

@@ -4,15 +4,12 @@ Spree::Core::Engine.routes.draw do
     resources :pickup_locations
   end
   namespace :api, defaults: { format: 'json' } do
-    get :search, to: 'pickup_locations#search', as: :pickup_locations_search, path: 'pickup_locations/search'
-  end
-
-  namespace :api, defaults: { format: 'json' } do
+    get 'pickup_locations/search', to: 'pickup_locations#search', as: :pickup_locations_search
     resources :shipments, only: [:create, :update] do
       member do
         put :deliver
-        put :pickup_ready
-        put :pickup_ship
+        put :ready_for_pickup
+        put :ship_for_pickup
       end
     end
   end

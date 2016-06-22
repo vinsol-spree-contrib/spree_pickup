@@ -12,9 +12,7 @@ Spree::CheckoutController.class_eval do
   def before_address
     @order.bill_address ||= Spree::Address.build_default
     if @order.checkout_steps.include?('delivery')
-      if !params[:order].try(:[], :pickup_location_id) && params[:order].try(:[], :ship_address_attributes)
-        @order.ship_address ||= Spree::Address.build_default
-      elsif(params[:action].eql?('edit'))
+      if(!params[:order].try(:[], :pickup_location_id) && params[:order].try(:[], :ship_address_attributes) || (params[:action].eql?('edit')))
         @order.ship_address ||= Spree::Address.build_default
       end
     end

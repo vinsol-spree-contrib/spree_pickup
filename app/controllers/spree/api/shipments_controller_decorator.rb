@@ -1,20 +1,20 @@
 Spree::Api::ShipmentsController.class_eval do
 
-  def pickup_ship
+  def ship_for_pickup
     find_and_update_shipment
-    @shipment.pickup_ship! if @shipment.ready?
+    @shipment.shipped_for_pickup! if @shipment.ready?
     respond_with(@shipment, default_template: :show)
   end
 
-  def pickup_ready
+  def ready_for_pickup
     find_and_update_shipment
-    @shipment.pickup_ready! if @shipment.pickup_shipped? || @shipment.ready?
+    @shipment.ready_for_pickup! if @shipment.shipped_for_pickup? || @shipment.ready?
     respond_with(@shipment, default_template: :show)
   end
 
   def deliver
     find_and_update_shipment
-    @shipment.deliver! if(@shipment.pickup_ready? || @shipment.shipped?)
+    @shipment.deliver! if(@shipment.ready_for_pickup? || @shipment.shipped?)
     respond_with(@shipment, default_template: :show)
   end
 
