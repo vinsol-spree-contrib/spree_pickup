@@ -5,8 +5,8 @@ function PickupCheckout (pickupDiv, shippingDiv) {
 
 PickupCheckout.prototype.init = function() {
   var order_use_billing = this.shippingDiv.find('#order_use_billing');
-  this.shippingDiv.find('[type=hidden]').attr('disabled', true)
-  order_use_billing.attr('checked', false);
+  this.shippingDiv.find('[type=hidden]').not('._destroy_ship').attr('disabled', true)
+  order_use_billing.attr('disabled', true);
   this.bindEvent();
 };
 
@@ -45,9 +45,8 @@ PickupCheckout.prototype.toggleShippingAddress = function(val) {
    this.shippingDiv.removeClass('hide');
    this.shippingDiv.find('input, select').addClass('required').prop( "disabled", false );
   } else {
-    debugger
     this.shippingDiv.addClass('hide');
-    this.shippingDiv.find('input, select').removeClass('required').prop( "disabled", true );
+    this.shippingDiv.find('input, select').not('._destroy_ship').removeClass('required').prop( "disabled", true );
     pickupInput.val(this.pickupVal);
   }
   val ? this.shippingDiv.removeClass('hide') : this.shippingDiv.addClass('hide');

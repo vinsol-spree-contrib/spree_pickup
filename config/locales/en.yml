@@ -6,5 +6,5 @@ en:
   spree:
     shipment_states:
       delivered: delivered
-      pickup_ready: pickup ready
-      pickup_shipped: pickup shipped
+      ready_for_pickup: ready for pickup
+      shipped_for_pickup: shipped for pickup

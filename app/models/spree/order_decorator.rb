@@ -4,14 +4,8 @@ Spree::Order.class_eval do
 
   validate :ensure_pickup_or_ship_address_present, if: :bill_address
 
-  accepts_nested_attributes_for :ship_address, allow_destroy: true
-
   def pickup_address
     pickup_location.try :address
-  end
-
-  def can_ship?
-    (self.complete? || self.resumed? || self.awaiting_return? || self.returned?) && self.ship_address_id.present?
   end
 
   def pickup?
@@ -19,8 +13,9 @@ Spree::Order.class_eval do
   end
 
   def ensure_pickup_or_ship_address_present
+    self.pickup_location_id = nil if ship_address
     unless((pickup_location && !ship_address) || (!pickup_location && ship_address))
-      errors[:base] << 'Either Ship Address or Pickup Address must be present'
+      # errors[:base] << 'Either Ship Address or Pickup Address must be present'
     end
   end
 

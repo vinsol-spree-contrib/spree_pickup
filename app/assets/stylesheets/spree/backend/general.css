@@ -5,16 +5,16 @@
   color: white !important;
 }
 
-.label-pickup_ready {
+.label-ready_for_pickup {
   background-color: #7DB942;
 }
-.label-pickup_ready a {
+.label-ready_for_pickup a {
   color: white !important;
 }
 
-.label-pickup_shipped {
+.label-shipped_for_pickup {
   background-color: #7DB942;
 }
-.label-pickup_shipped a {
+.label-shipped_for_pickup a {
   color: white !important;
 }

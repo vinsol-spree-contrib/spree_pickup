@@ -6,10 +6,10 @@
     </div>
     <div class="panel-body">
       <div class="field checkbox" data-hook="pickup-content">
-        <%if @order.pickup_location%>
-          <%=@order.pickup_location.name%>
-          <%= render "spree/shared/address", address: @order.pickup_location.address %>
-        <%end%>
+        <%#if @order.pickup_location%>
+          <%=@order.pickup_location.try :name%>
+          <%= render "spree/shared/address", address: @order.pickup_location.try(:address) || Spree::Address.new %>
+        <%#end%>
       </div>
     </div>
   </div>

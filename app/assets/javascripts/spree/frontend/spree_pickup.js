@@ -4,7 +4,7 @@
 
   var update_state = function (region, done) {
   "use strict";
-  var country = $("span#" + region + "country .select22").val();
+  var country = $("span#" + region + "country-select .select22").val();
   var state_select = $("span#" + region + "state select.select22");
   var state_input = $("span#" + region + "state input.state_name");
   $.get(Spree.routes.states_search + "?country_id=" + country, function (data) {

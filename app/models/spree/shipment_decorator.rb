@@ -6,11 +6,11 @@ Spree::Shipment.class_eval do
 
   state_machine do
 
-    event :ship do
-      reset
-      transition from: [:ready, :canceled], to: :shipped, if: :can_shipped?
-    end
-    after_transition to: :shipped, do: :after_ship
+    # event :ship do
+    #   reset
+    #   transition from: [:ready, :canceled], to: :shipped, if: :can_shipped?
+    # end
+    # after_transition to: :shipped, do: :after_ship
 
     event :ship_for_pickup do
       transition from: [:ready, :canceled], to: :shipped_for_pickup, if: :can_shipped_for_pickup?
@@ -26,7 +26,7 @@ Spree::Shipment.class_eval do
     end
 
     after_transition from: :canceled, to: [:ready_for_pickup, :shipped_for_pickup], do: :after_resume
-    after_transition to: [:ready_for_pickup, :deliver], do: :update_order_shipment
+    after_transition to: [:ready_for_pickup, :delivered], do: :update_order_shipment
 
   end
 

@@ -16,13 +16,13 @@ ShipmentDecorator.prototype.sendDeliverRequest = function (event) {
 
 ShipmentDecorator.prototype.sendPickupShipRequest = function (event) {
   var link = $(event.currentTarget);
-  var url = this.buildUrl(link, 'pickup_ship');
+  var url = this.buildUrl(link, 'ship_for_pickup');
   this.sendRequest(url);
 };
 
 ShipmentDecorator.prototype.sendPickupReadyRequest = function (event) {
   var link = $(event.currentTarget);
-  var url = this.buildUrl(link, 'pickup_ready');
+  var url = this.buildUrl(link, 'ready_for_pickup');
   this.sendRequest(url);
 };
 
