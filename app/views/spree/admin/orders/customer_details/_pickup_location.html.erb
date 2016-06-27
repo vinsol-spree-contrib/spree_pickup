@@ -1,0 +1,86 @@
+<%kls = @order.pickup_location ? "" : 'hide'%>
+<div class="col-sm-6 <%=kls%>" data-hook="pickup_fieldset_wrapper">
+  <div class="panel panel-default" id="pickup" data-hook>
+    <div class="panel-heading">
+      <h3 class="panel-title">Selected Pick Up Location</h3>
+    </div>
+    <div class="panel-body">
+      <div class="field checkbox" data-hook="pickup-content">
+        <%if @order.pickup_location%>
+          <%=@order.pickup_location.name%>
+          <%= render "spree/shared/address", address: @order.pickup_location.address %>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style='width:90%'>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid bd-example-row">
+          <div class='row'>
+            <div class= 'col-md-6'>
+              <div data-hook="pickup_wrapper">
+
+                <div class="form-group" data-hook="pickup_location_country">
+                  <%= label_tag :country_id, Spree.t(:country) %>
+                  <span id="country-select">
+                    <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: Spree::Country.default.id}, { class: "select22" } %>
+                  </span>
+                </div>
+
+                <div class="form-group" data-hook="pickup_location_state">
+                    <%= label_tag :state_id, Spree.t(:state) %>
+                    <span id="state" class="region">
+                      <%= collection_select :pickup_location, :state_id, Spree::Country.default.states, :id, :name, { include_blank: true }, {class: "select22", style: ""} %>
+                    </span>
+                </div>
+                  <%=f.hidden_field :pickup_location_id, class: 'pickup_id'%>
+
+                <div class='col-md-12' data-hook= 'pickup_locations_wrapper' style= "max-height:400px;overflow-y:auto">
+              </div>
+            </div>
+          </div>
+
+            <div class= 'col-md-6'>
+              <div class='col-md-12' data-hook= 'map_wrapper' id='map' style="height:350px"></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :head do %>
+
+  <%=javascript_include_tag "spree/frontend/pickup_checkout"%>
+  <%=javascript_include_tag "spree/frontend/pickup_locations_getter"%>
+  <%=javascript_include_tag "spree/frontend/map_initializer"%>
+  <%=javascript_include_tag "spree/frontend/modal_builder"%>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.secrets.google_map_key%>"
+    ></script>
+  <%= javascript_tag do %>
+    $(function(){
+      mI = new MapInitializer('<%#=Spree::Country.default.name%>');
+      mI.init();
+      $("span#country-select .select22").on("change", function(event) {update_states("") });
+      var pC = new PickupCheckout($('[data-hook="pickup_fieldset_wrapper"]'), $('[data-hook="ship_address_wrapper"]'));
+      var pLG = new PickupLocationGetter('<%=api_pickup_locations_search_path %>');
+      pLG.init();
+      pC.init();
+    });
+  <% end %>
+<% end %>

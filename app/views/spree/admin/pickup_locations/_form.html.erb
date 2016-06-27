@@ -1,0 +1,89 @@
+<div data-hook="admin_pickup_locations_form_fields">
+  <div class="row">
+    <div class="col-md-9" data-hook="pickup_location_names">
+      <div data-hook="pickup_location_name">
+          <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
+          <%= f.text_field :name, class: 'form-control', required: true %>
+      </div>
+    </div>
+  </div>
+
+  <%=f.fields_for :address do |f|%>
+
+  <div class="form-group" data-hook="pickup_location_first_name">
+    <%= f.label :first_name, 'First Name' %>
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_last_name">
+    <%= f.label :last_name, 'Last Name' %>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_address1">
+    <%= f.label :address1, Spree.t(:street_address) %>
+    <%= f.text_field :address1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_address2">
+    <%= f.label :address2, Spree.t(:street_address_2) %>
+    <%= f.text_field :address2, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_city">
+    <%= f.label :city, Spree.t(:city) %>
+    <%= f.text_field :city, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_zipcode">
+    <%= f.label :zipcode, Spree.t(:zip) %>
+    <%= f.text_field :zipcode, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_phone">
+    <%= f.label :phone, Spree.t(:phone) %>
+    <%= f.phone_field :phone, class: 'form-control' %>
+  </div>
+  <div class="form-group" data-hook="pickup_location_country">
+    <%= f.label :country_id, Spree.t(:country) %>
+    <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2' } %></span>
+  </div>
+
+  <div class="form-group" data-hook="pickup_location_state">
+    <% if f.object.country %>
+      <%= f.label :state_id, Spree.t(:state) %>
+      <span id="state" class="region">
+        <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+      </span>
+    <% end %>
+  </div>
+  <%end%>
+
+
+  <%= f.field_container :open_day_ids, class: ['form-group'] do %>
+    <%= f.label :open_day_ids, 'Open Days' %>
+    <%#f.object.open_day_ids = Date::DAYNAMES.zip((0..6).to_a)%>
+    <%= f.select :open_day_ids, Date::DAYNAMES.zip((0..6).to_a), { selected: (0..6).to_a}, { :multiple => true, :class => "select2"}%>
+  <% end %>
+
+  <div class="form-group col-md-6">
+    <%= f.label :start_time %>
+    <%= f.time_field :start_time %>
+  </div>
+  <div class="form-group col-md-6">
+    <%= f.label :end_time %>
+    <%= f.time_field :end_time %>
+  </div>
+
+
+
+
+</div>
+
+<% content_for :head do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      $('span#country .select2').on('change', function() { update_state(''); });
+    });
+  <% end %>
+<% end %>

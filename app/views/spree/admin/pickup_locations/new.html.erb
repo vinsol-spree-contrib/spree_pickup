@@ -1,0 +1,16 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:new_pickup_location) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= link_to_with_icon 'arrow-left', Spree.t(:back_to_pickup_locations_list), admin_pickup_locations_path, :class => 'btn btn-primary' %>
+<% end %>
+
+<%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @pickup_locations } %>
+
+<%= form_for [:admin, @pickup_location] do |f| %>
+  <fieldset>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>
