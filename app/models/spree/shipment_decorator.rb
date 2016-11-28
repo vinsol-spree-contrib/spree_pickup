@@ -6,12 +6,6 @@ Spree::Shipment.class_eval do
 
   state_machine do
 
-    # event :ship do
-    #   reset
-    #   transition from: [:ready, :canceled], to: :shipped, if: :can_shipped?
-    # end
-    # after_transition to: :shipped, do: :after_ship
-
     event :ship_for_pickup do
       transition from: [:ready, :canceled], to: :shipped_for_pickup, if: :can_shipped_for_pickup?
     end
@@ -30,18 +24,18 @@ Spree::Shipment.class_eval do
 
   end
 
-  def can_shipped?
-    order.can_ship?
-  end
+  private
 
-  def can_shipped_for_pickup?
-    order.pickup_location_id.present?
-  end
+    def can_shipped?
+      order.can_ship?
+    end
 
-  def update_order_shipment
-    Spree::ShipmentHandler.factory(self).send :update_order_shipment_state
-  end
+    def can_shipped_for_pickup?
+      order.pickup_location_id.present?
+    end
 
-  private :can_shipped?, :can_shipped_for_pickup?, :update_order_shipment
+    def update_order_shipment
+      Spree::ShipmentHandler.factory(self).send :update_order_shipment_state
+    end
 
 end
