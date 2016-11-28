@@ -2,7 +2,7 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
 
   def update
     if params.dig(:order, :ship_address_attributes, :_destroy)
-      @order.ship_address.try :destroy
+      @order.ship_address.destroy if @order.ship_address
       @order.ship_address_id = nil
     end
     if @order.update_attributes(order_params)
@@ -19,15 +19,15 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
 
   end
 
-  def order_params
-    params.require(:order).permit(
-      :email,
-      :use_billing, :pickup_location_id,
-      bill_address_attributes: permitted_address_attributes,
-      ship_address_attributes: permitted_address_attributes + [:_destroy]
-    )
-  end
+  private
 
-  private :order_params
+    def order_params
+      params.require(:order).permit(
+        :email,
+        :use_billing, :pickup_location_id,
+        bill_address_attributes: permitted_address_attributes,
+        ship_address_attributes: permitted_address_attributes + [:_destroy]
+      )
+    end
 
 end
