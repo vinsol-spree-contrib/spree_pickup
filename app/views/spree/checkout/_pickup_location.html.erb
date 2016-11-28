@@ -6,10 +6,8 @@
     </div>
     <div class="panel-body">
       <div class="field checkbox" data-hook="pickup-content">
-        <%#if @order.pickup_location%>
-          <%=@order.pickup_location.try :name%>
-          <%= render "spree/shared/address", address: @order.pickup_location.try(:address) || Spree::Address.new %>
-        <%#end%>
+        <%=@order.pickup_location.try :name%>
+        <%= render "spree/shared/address", address: @order.pickup_location.try(:address) || Spree::Address.new %>
       </div>
     </div>
   </div>
@@ -56,20 +54,16 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
     </div>
   </div>
 </div>
 
 <% content_for :head do %>
 
-  <%=javascript_include_tag "spree/frontend/pickup_checkout"%>
-  <%=javascript_include_tag "spree/frontend/pickup_locations_getter"%>
-  <%=javascript_include_tag "spree/frontend/map_initializer"%>
-  <%=javascript_include_tag "spree/frontend/modal_builder"%>
+  <%=javascript_include_tag "spree/shared/pickup_checkout"%>
+  <%=javascript_include_tag "spree/shared/pickup_locations_getter"%>
+  <%=javascript_include_tag "spree/shared/map_initializer"%>
+  <%=javascript_include_tag "spree/shared/modal_builder"%>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.secrets.google_map_key%>"
     ></script>
   <%= javascript_tag do %>
