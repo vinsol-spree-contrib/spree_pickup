@@ -42,7 +42,7 @@
       <% end %>
     </tbody>
   </table>
-<% elsif @order.shipments.any?(&:shipped?) %>
+<% elsif @order.shipments.any?(&:delivered?) %>
   <div class="alert alert-info no-objects-found">
     <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::ReturnAuthorization)) %>
   </div>

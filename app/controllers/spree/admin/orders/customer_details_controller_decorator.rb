@@ -20,7 +20,6 @@ Spree::Admin::Orders::CustomerDetailsController.class_eval do
   end
 
   private
-
     def order_params
       params.require(:order).permit(
         :email,

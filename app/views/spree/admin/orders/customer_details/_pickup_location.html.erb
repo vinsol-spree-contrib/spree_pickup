@@ -1,4 +1,4 @@
-<%kls = @order.pickup_location ? "" : 'hide'%>
+<% kls = @order.pickup_location ? "" : 'hide' %>
 <div class="col-sm-6 <%=kls%>" data-hook="pickup_fieldset_wrapper">
   <div class="panel panel-default" id="pickup" data-hook>
     <div class="panel-heading">
@@ -6,7 +6,7 @@
     </div>
     <div class="panel-body">
       <div class="field checkbox" data-hook="pickup-content">
-        <%=@order.pickup_location.try :name%>
+        <%= @order.pickup_location.try :name %>
         <%= render "spree/shared/address", address: @order.pickup_location.try(:address) || Spree::Address.new %>
       </div>
     </div>

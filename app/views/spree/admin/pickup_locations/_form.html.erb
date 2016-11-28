@@ -63,7 +63,7 @@
   <%= f.field_container :open_day_ids, class: ['form-group'] do %>
     <%= f.label :open_day_ids, 'Open Days' %>
     <%#f.object.open_day_ids = Date::DAYNAMES.zip((0..6).to_a)%>
-    <%= f.select :open_day_ids, Date::DAYNAMES.zip((0..6).to_a), { selected: (0..6).to_a}, { :multiple => true, :class => "select2"}%>
+    <%= f.select :open_day_ids, Date::DAYNAMES.zip((0..6).to_a), { selected: (0..6).to_a}, { multiple: true, class: "select2" } %>
   <% end %>
 
   <div class="form-group col-md-6">
@@ -74,10 +74,7 @@
     <%= f.label :end_time %>
     <%= f.time_field :end_time %>
   </div>
-
-
-
-
+  
 </div>
 
 <% content_for :head do %>
