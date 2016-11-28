@@ -12,7 +12,7 @@ Deface::Override.new(
 
             <div class="panel-body">
               <%= f.check_box :pickupable %>
-              <%= f.label :pickupable%>
+              <%= f.label :pickupable %>
             </div>
           </div>
         </div>
