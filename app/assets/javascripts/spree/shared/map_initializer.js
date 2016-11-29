@@ -1,6 +1,9 @@
-function MapInitializer(default_country) {
+function MapInitializer(default_country, data) {
   this.default_country = default_country;
   this.geocoder = new google.maps.Geocoder();
+  this.mapDiv = $('[data-hook="map_wrapper"]');
+  this.mapToggleBtn = $('.toggle-map');
+  this.data = data;
 }
 
 MapInitializer.prototype.init = function() {
@@ -9,11 +12,28 @@ MapInitializer.prototype.init = function() {
                 zoom: 11
               });
    this.setCenter();
+   this.bindEvent();
+   if(this.data.length) {
+     this.mapToggleBtn.removeClass('hide');
+   } else if(!this.mapToggleBtn.hasClass('hide')) {
+     this.mapToggleBtn.addClass('hide');
+   }
 };
 
-MapInitializer.prototype.setMarker = function(collection) {
+MapInitializer.prototype.bindEvent = function() {
   var _this = this;
-  $.each(collection, function(index, value) {
+  this.mapToggleBtn.on('click', function() {
+    _this.mapDiv.toggleClass('hide');
+    if(!_this.mapDiv.hasClass('hide')) {
+      _this.setCenter();
+      _this.setMarker();
+    }
+  })
+}
+
+MapInitializer.prototype.setMarker = function() {
+  var _this = this;
+  $.each(this.data, function(index, value) {
     marker = _this.addMarker(index, value);
     _this.addInfoWindow(marker, value.name);
   })
@@ -46,7 +66,7 @@ MapInitializer.prototype.imageUrlBuilder = function(value) {
 MapInitializer.prototype.setCenter = function() {
   var _this = this;
   if(_this.default_country) {
-    this.geocoder.geocode( { 'address': _this.default_country}, function(results, status) {
+    this.geocoder.geocode( { 'address': _this.default_country }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         _this.map.setCenter(results[0].geometry.location);
       }

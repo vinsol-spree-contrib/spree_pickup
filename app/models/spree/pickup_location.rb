@@ -49,7 +49,7 @@ module Spree
       end
 
       def end_time_must_be_greater_than_start_time
-        errors[:end_time] << 'must be greater than start time' if start_time >= end_time
+        errors[:end_time] << Spree.t(:greater_than_start_time) if start_time >= end_time
       end
 
       def open_day_ids_changed?

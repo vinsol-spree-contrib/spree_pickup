@@ -1,80 +1,29 @@
-<%kls = @order.pickup_location ? "" : 'hide'%>
-<div class="col-sm-6 <%=kls%>" data-hook="pickup_fieldset_wrapper">
-  <div class="panel panel-default" id="pickup" data-hook>
-    <div class="panel-heading">
-      <h3 class="panel-title">Selected Pick Up Location</h3>
-    </div>
-    <div class="panel-body">
-      <div class="field checkbox" data-hook="pickup-content">
-        <%=@order.pickup_location.try :name%>
-        <%= render "spree/shared/address", address: @order.pickup_location.try(:address) || Spree::Address.new %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" style='width:90%'>
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid bd-example-row">
-          <div class='row'>
-            <div class= 'col-md-6'>
-              <div data-hook="pickup_wrapper">
-
-                <div class="form-group" data-hook="pickup_location_country">
-                  <%= label_tag :country_id, Spree.t(:country) %>
-                  <span id="country-select">
-                    <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: Spree::Country.default.id}, { class: "select22" } %>
-                  </span>
-                </div>
-
-                <div class="form-group" data-hook="pickup_location_state">
-                    <%= label_tag :state_id, Spree.t(:state) %>
-                    <span id="state" class="region">
-                      <%= collection_select :pickup_location, :state_id, Spree::Country.default.states, :id, :name, { include_blank: true }, {class: "select22", style: ""} %>
-                    </span>
-                </div>
-                  <%=form.hidden_field :pickup_location_id, class: 'pickup_id'%>
-
-                <div class='col-md-12' data-hook= 'pickup_locations_wrapper' style= "max-height:400px;overflow-y:auto">
-              </div>
-            </div>
-          </div>
-
-            <div class= 'col-md-6'>
-              <div class='col-md-12' data-hook= 'map_wrapper' id='map' style="height:350px"></div>
-
-            </div>
-          </div>
+<div class="col-md-6">
+  <div class="panel panel-default pickup-panel">
+    <div class="address vcard panel-body" data-id='<%= pickup_location.id %>'>
+      <span class="img-label">
+        <img src=<%="https://images-eu.ssl-images-amazon.com/images/G/31/x-site/cvs/map/location_"  + (pickup_location_counter + 1).to_s + "._CB138359918_.gif" %> class="index">
+      </span>
+      <div class="fn"><%= pickup_location.name %></div>
+      <div class="adr">
+        <div class="street-address">
+          <%= pickup_location.address.address1.to_s + ' ' + pickup_location.address.address2.to_s %>
+        </div>
+        <div class="local">
+          <span class="locality"><%= pickup_location.address.city %></span>
+          <span class="region"><%= pickup_location.address.state_text %></span>
+          <span class="zipcode"><%= pickup_location.address.zipcode %></span>
+          <span class="country"><%= pickup_location.address.country.try(:name) %></span>
         </div>
       </div>
+      <div class="tel">
+        <%= pickup_location.address.phone %>
+      </div>
+      <div class="open-day-timings">
+        <div class="days"><%= pickup_location.timings.map { |timing| Date::DAYNAMES[timing.day_id] }.to_sentence %></div>
+        <div class="timings"><%= pickup_location.start_time.to_s(:time) + '-' + pickup_location.end_time.to_s(:time) %></div>
+      </div>
+      <div class="btn btn-warning dispatch btn-xs pull-right">Dispatch</div>
     </div>
   </div>
 </div>
-
-<% content_for :head do %>
-
-  <%=javascript_include_tag "spree/shared/pickup_checkout"%>
-  <%=javascript_include_tag "spree/shared/pickup_locations_getter"%>
-  <%=javascript_include_tag "spree/shared/map_initializer"%>
-  <%=javascript_include_tag "spree/shared/modal_builder"%>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.secrets.google_map_key%>"
-    ></script>
-  <%= javascript_tag do %>
-    $(function(){
-      mI = new MapInitializer('<%#=Spree::Country.default.name%>');
-      mI.init();
-      $("span#country-select .select22").on("change", function(event) {update_state("") });
-      var pC = new PickupCheckout($('[data-hook="pickup_fieldset_wrapper"]'), $('[data-hook="shipping_fieldset_wrapper"]'));
-      var pLG = new PickupLocationGetter('<%=api_pickup_locations_search_path %>');
-      pLG.init();
-      pC.init();
-    });
-  <% end %>
-<% end %>

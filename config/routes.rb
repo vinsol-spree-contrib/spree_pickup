@@ -13,5 +13,5 @@ Spree::Core::Engine.routes.draw do
       end
     end
   end
-
+  resources :pickup_locations, only: :index
 end

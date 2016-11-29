@@ -1,0 +1,43 @@
+<div class='row'>
+  <div data-hook="pickup_wrapper">
+    <div class="form-group col-md-4" data-hook="pickup_location_country">
+      <%= label_tag :country_id, Spree.t(:country) %>
+      <span id="country-select">
+        <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: Spree::Country.default.id}, { class: "select22 select-width" } %>
+      </span>
+    </div>
+    <div class="form-group col-md-4" data-hook="pickup_location_state">
+      <%= label_tag :state_id, Spree.t(:state) %>
+      <span id="state" class="region">
+        <%= collection_select :pickup_location, :state_id, Spree::Country.default.states, :id, :name, { include_blank: true }, { class: "select22 select-width", style: ""} %>
+      </span>
+    </div>
+    <div class='col-md-2'>
+      <a href="javascript:void(0)" class=' btn btn-warning toggle-map btn-xs'>Show/Hide Map</a>
+    </div>
+    <%=f.hidden_field :pickup_location_id, class: 'pickup_id'%>
+  </div>
+  <div data-hook= 'map_wrapper' class='hide col-md-12'>
+    <div class='col-md-8 col-md-offset-2' id='map' style="height:350px"></div>
+  </div>
+  <div data-hook='pickup-listing'>
+    <div class='col-md-12' data-hook='pickup_locations_wrapper' style= "max-height:400px;overflow-y:auto">
+    </div>
+  </div>
+</div>
+<% content_for :head do %>
+  <%=javascript_include_tag "spree/shared/pickup_checkout"%>
+  <%=javascript_include_tag "spree/backend/pickup_locations_getter"%>
+  <%=javascript_include_tag "spree/shared/map_initializer"%>
+  <%=javascript_include_tag "spree/backend/pickup_list_builder"%>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.secrets.google_map_key%>"
+    ></script>
+  <%= javascript_tag do %>
+    $(function(){
+      var pC = new PickupCheckout($('#pickup_address'), $('#shipping_address'));
+      var pLG = new PickupLocationGetter('<%=api_pickup_locations_search_path %>');
+      pLG.init();
+      pC.init();
+    });
+  <% end %>
+<% end %>

@@ -4,6 +4,8 @@
 en:
   hello: "Hello world"
   spree:
+    ensure_pickup_or_ship_address_present: Either Ship Address or Pickup Address must be present
+    greater_than_start_time: must be greater than start time
     shipment_states:
       delivered: delivered
       ready_for_pickup: ready for pickup

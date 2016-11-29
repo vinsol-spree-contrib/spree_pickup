@@ -1,0 +1,5 @@
+var pickupLocationWrapper = $("[data-hook='pickup_locations_wrapper' ]");
+pickupLocationWrapper.empty();
+pickupLocationWrapper.append("<%= j render partial: 'spree/checkout/pickup_location', collection: @base_scope %>");
+var mapInitializer = new MapInitializer('<%= (@state.name + ', ' + @country.name) %>' , <%= raw @base_scope.map(&:attributes).to_json %>);
+mapInitializer.init();

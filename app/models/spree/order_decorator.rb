@@ -1,6 +1,6 @@
 Spree::Order.class_eval do
 
-  belongs_to :pickup_location, class_name: 'Spree::PickupLocation'
+  belongs_to :pickup_location, class_name: Spree::PickupLocation.to_s
 
   validate :ensure_pickup_or_ship_address_present, if: :bill_address
 
@@ -21,7 +21,7 @@ Spree::Order.class_eval do
     def ensure_pickup_or_ship_address_present
       self.pickup_location_id = nil if ship_address
       unless((pickup_location && !ship_address) || (!pickup_location && ship_address))
-        # errors[:base] << 'Either Ship Address or Pickup Address must be present'
+        errors[:base] << Spree.t(:ensure_pickup_or_ship_address_present)
       end
     end
 

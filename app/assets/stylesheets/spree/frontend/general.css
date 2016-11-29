@@ -1,0 +1,20 @@
+.lm-5{
+  margin-left: 5px;
+}
+
+.pickup-panel  .panel-body {
+  padding: 5px 20px ;
+}
+.pickup-panel .img-label {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.select-width {
+  width: 65%;
+}
+
+.dispatch {
+  margin-top: -20px;
+}
