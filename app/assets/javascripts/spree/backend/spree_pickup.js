@@ -3,4 +3,4 @@
 //= require 'spree/backend/shipment_decorator.js'
 //= require 'spree/shared/map_initializer.js'
 //= require 'spree/shared/pickup_checkout.js'
-//= require 'spree/shared/spree_state_fetcher.js'
+//= require 'spree/shared/spree_states_fetcher.js'
