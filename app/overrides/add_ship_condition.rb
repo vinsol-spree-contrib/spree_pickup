@@ -11,7 +11,7 @@ Deface::Override.new(
       <span class="shipment-state"><%= Spree.t("shipment_states.#{shipment.state}") %></span>
       <%= Spree.t(:package_from) %>
       <strong class="stock-location-name" data-hook="stock-location-name">\'<%= shipment.stock_location.name %>\'</strong>
-      <% if @order.ship_address && shipment.ready? and can? :update, shipment %>
+      <% if !@order.pickup? && shipment.ready? and can? :update, shipment %>
         <%= link_to Spree.t(:ship), "javascript:;", class: "ship pull-right btn-sm btn btn-success", data: { "shipment-number": shipment.number } %>
         <div class="clearfix"></div>
       <% end %>
