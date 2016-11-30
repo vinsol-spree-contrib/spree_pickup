@@ -20,10 +20,15 @@
         <%= pickup_location.address.phone %>
       </div>
       <div class="open-day-timings">
-        <div class="days"><%= pickup_location.timings.map { |timing| Date::DAYNAMES[timing.day_id] }.to_sentence %></div>
+        <div class="days"><%= pickup_location.timings.map { |timing| Date::DAYNAMES[timing.day_id].slice(0, 3) }.to_sentence %></div>
         <div class="timings"><%= pickup_location.start_time.to_s(:time) + '-' + pickup_location.end_time.to_s(:time) %></div>
       </div>
-      <div class="btn btn-warning dispatch btn-xs pull-right">Dispatch</div>
+      <div class="funkyradio">
+        <div class="pull-right dispatch funkyradio-warning">
+          <input type="radio" name="pickup_location" id='pickup_location_<%= pickup_location.id%>'/>
+          <label for='pickup_location_<%= pickup_location.id%>'>Dispatch</label>
+        </div>
+      </div>
     </div>
   </div>
 </div>

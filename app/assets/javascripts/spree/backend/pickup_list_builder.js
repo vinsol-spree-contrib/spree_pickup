@@ -10,7 +10,7 @@ PickupListBuilder.prototype.initializeList = function() {
   var _this = this;
   var $destination = $('[data-hook=pickup_locations_wrapper]');
   $destination.empty();
-  $div = $('<div/>', { clas: 'row' });
+  $div = $('<div/>', { class: 'row' });
   $.each(this.pickupLocations, function(a, b){
     div = _this.buildPickupTemplate(++a , b);
     $div.append(div) ;
@@ -34,13 +34,18 @@ PickupListBuilder.prototype.buildPickupTemplate = function(index, pickupObject) 
       $timingSpan = $('<div/>', { class: 'timings', text: this.timeDecorator(pickupObject) }),
       $indexSpan = $('<span/>', {  class: "img-label" }),
       $indexImg = $('<img/>', { src: this.imageUrlBuilder(index), class: 'index' }),
-      $dispatchDiv = $('<div/>', { text: 'Dispatch', class: 'btn btn-warning dispatch' });
+      $pickupRadioDiv = $('<div/>', { class: 'funkyradio' }),
+      $dispatchDiv = $('<div/>', { class: "pull-right dispatch funkyradio-warning" }),
+      $radioInput = $('<input/>', {type: 'radio', name: "pickup_location", id: ('pickup_location_' + pickupObject.id) } ),
+      $radioLabel = $('<label/>', { for: ('pickup_location_' + pickupObject.id), text: 'Dispatch' });
 
   $localAddressDiv.append($localitySpan, $regionSpan, $zipcodeSpan, $countrySpan);
   $adrDiv.append($streetAddressDiv, $localAddressDiv);
   $openDayTimingsDiv.append($daysSpan, $timingSpan);
   $indexSpan.append($indexImg);
-  $div.append($indexSpan, $fnDiv, $adrDiv, $phoneDiv, $openDayTimingsDiv, $dispatchDiv);
+  $dispatchDiv.append($radioInput, $radioLabel);
+  $pickupRadioDiv.append($dispatchDiv);
+  $div.append($indexSpan, $fnDiv, $adrDiv, $phoneDiv, $openDayTimingsDiv, $pickupRadioDiv);
   return $('<div/>', { class: 'col-md-6' }).append($('<div/>', { class: 'panel panel-default pickup-panel' }).append($div));
 };
 

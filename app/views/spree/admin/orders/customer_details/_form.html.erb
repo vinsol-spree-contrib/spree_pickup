@@ -106,6 +106,7 @@
                   </span>
                 </div>
                 <%= render partial: 'spree/admin/shared/address_form', locals: { f: sa_form, type: 'shipping' } %>
+                <%= sa_form.hidden_field :_destroy, class: "_destroy_ship" %>
               <% end %>
             <% else %>
               <%= render partial: 'spree/admin/shared/pickup_address', locals: { address: @order.ship_address } %>

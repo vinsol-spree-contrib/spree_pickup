@@ -17,11 +17,15 @@ PickupCheckout.prototype.bindEvent = function() {
   this.pickupNavLink.on('click', function(event) {
     _this.toggleShippingAddress(false);
     _this.destroyShipInput.val(true);
+    _this.shippingNavLink.parents('li').removeClass('active');
+    _this.pickupNavLink.parents('li').addClass('active');
   });
 
   this.shippingNavLink.on('click', function(event) {
     _this.toggleShippingAddress(true);
     _this.destroyShipInput.val(false);
+    _this.pickupNavLink.parents('li').removeClass('active');
+    _this.shippingNavLink.parents('li').addClass('active');
   });
 
   $('body').on('click', ".dispatch", this.setPickupValue.bind(_this));

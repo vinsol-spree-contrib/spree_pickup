@@ -1,6 +1,7 @@
 <% pickup_location_present = f.object.pickup_location.present? %>
 <% selected_country_id = pickup_location_present ? f.object.pickup_location.address.country_id : Spree::Country.default.id %>
 <% selected_country_states = pickup_location_present ? f.object.pickup_location.address.country.states : Spree::Country.default.states %>
+<% selected_state_id = f.object.pickup_location.address.state_id if pickup_location_present %>
 <div class='row'>
   <div data-hook="pickup_wrapper">
     <div class="form-group col-md-4" data-hook="pickup_location_country">
@@ -12,7 +13,7 @@
     <div class="form-group col-md-4" data-hook="pickup_location_state">
       <%= label_tag :state_id, Spree.t(:state) %>
       <span id="state" class="region">
-        <%= collection_select :pickup_location, :state_id, selected_country_states, :id, :name, { include_blank: true }, { class: "select22 select-width", style: ""} %>
+        <%= collection_select :pickup_location, :state_id, selected_country_states, :id, :name, { selected: selected_state_id, include_blank: true }, { class: "select22 select-width", style: ""} %>
       </span>
     </div>
     <div class='col-md-2'>
@@ -39,6 +40,9 @@
       var pickupCheckout = new PickupCheckout($('#pickup_address'), $('#shipping')),
           pickupLocationGetter = new PickupLocationGetter('<%= pickup_locations_path %>');
       pickupLocationGetter.init();
+      <% if pickup_location_present %>
+        $('#state').find('select').trigger('change');
+      <% end %>
       pickupCheckout.init();
     });
   <% end %>
