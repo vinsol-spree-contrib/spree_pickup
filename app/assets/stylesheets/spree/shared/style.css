@@ -83,7 +83,10 @@
     background-color: #f0ad4e;
 }
 
-.my-hide{
-  height: 0px;
-  width: 0px;
+.map-wrapper {
+  height: 350px;
+}
+
+.hide-map {
+  height: 0px !important;
 }

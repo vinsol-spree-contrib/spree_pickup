@@ -1,3 +1,4 @@
+Spree::Shipment::FINALIZED_STATES = ['delivered', 'shipped', 'ready_for_pickup', 'shipped_for_pickup']
 Spree::Shipment.class_eval do
 
   scope :delivered, -> { with_state('delivered') }
@@ -12,16 +13,22 @@ Spree::Shipment.class_eval do
     after_transition to: :shipped_for_pickup, do: :after_ship
 
     event :ready_for_pickup do
-      transition from: [:ready, :canceled, :shipped_for_pickup], to: :ready_for_pickup
+      transition from: [:ready, :canceled], to: :ready_for_pickup
+      transition from: :shipped_for_pickup, to: :ready_for_pickup
     end
+    after_transition rom: [:ready, :canceled], to: :ready_for_pickup, do: :after_ship
 
     event :deliver do
       transition from: [:ready_for_pickup, :shipped], to: :delivered
     end
 
     after_transition from: :canceled, to: [:ready_for_pickup, :shipped_for_pickup], do: :after_resume
-    after_transition to: [:ready_for_pickup, :delivered], do: :update_order_shipment
+    after_transition to: :delivered, do: :update_order_shipment
 
+  end
+
+  def finalized?
+    self.class::FINALIZED_STATES.include?(state)
   end
 
   private
@@ -31,7 +38,7 @@ Spree::Shipment.class_eval do
     end
 
     def can_shipped_for_pickup?
-      order.pickup_location_id.present?
+      order.pickup?
     end
 
     def update_order_shipment

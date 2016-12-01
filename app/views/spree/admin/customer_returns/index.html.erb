@@ -1,7 +1,7 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: :customer_returns } %>
-
+<% any_shipment_finalized  = @order.shipments.any? { |shipment| shipment.finalized? } %>
 <% content_for :page_actions do %>
-  <% if @order.shipments.any?(&:shipped?) && can?(:create, Spree::CustomerReturn) %>
+  <% if any_shipment_finalized && can?(:create, Spree::CustomerReturn) %>
     <%= button_link_to Spree.t(:new_customer_return), spree.new_admin_order_customer_return_path(@order), icon: 'add', class: 'btn-success' %>
   <% end %>
 <% end %>
@@ -10,8 +10,7 @@
   / <%= plural_resource_name(Spree::CustomerReturn) %>
 <% end %>
 
-<% if @order.shipments.any?(&:delivered?) %>
-
+<% if any_shipment_finalized %>
   <% if @customer_returns.any? %>
     <table class="table">
       <thead data-hook="customer_return_header">
