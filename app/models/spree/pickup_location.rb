@@ -1,6 +1,7 @@
 module Spree
 
   class PickupLocation < Spree::Base
+    extend Geocoder::Model::ActiveRecord
 
     attr_accessor :open_day_ids, :open_day_ids_was
 
