@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:editing_resource, resource: Spree::PickupLocation.model_name.human) %> /
+  <%= @pickup_location.name %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= link_to_with_icon 'arrow-left', Spree.t(:back_to_resource_list, resource: Spree::PickupLocation.model_name.human), admin_pickup_locations_path, class: 'btn btn-default' %>
+<% end %>
+
+<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @pickup_location } %>
+
+<%= form_for [:admin, @pickup_location] do |f| %>
+  <fieldset>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+  </fieldset>
+<% end %>

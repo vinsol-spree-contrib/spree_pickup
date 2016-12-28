@@ -17,6 +17,8 @@ require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 
 require 'rspec/rails'
 require 'database_cleaner'
+require 'shoulda/matchers'
+require 'shoulda-callback-matchers'
 require 'ffaker'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -29,11 +31,23 @@ require 'spree/testing_support/capybara_ext'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/factories'
 require 'spree/testing_support/url_helpers'
+require 'spree/testing_support/shoulda_matcher_configuration'
+
 
 # Requires factories defined in lib/spree_pickup/factories.rb
 require 'spree_pickup/factories'
+require 'rspec/active_model/mocks'
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 
 RSpec.configure do |config|
+  FactoryGirl.find_definitions
   config.include FactoryGirl::Syntax::Methods
 
   # Infer an example group's spec type from the file location.

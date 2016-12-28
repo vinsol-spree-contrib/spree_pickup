@@ -1,0 +1,20 @@
+.label-delivered {
+  background-color: #7DB942;
+}
+.label-delivered a {
+  color: white !important;
+}
+
+.label-ready_for_pickup {
+  background-color: #7DB942;
+}
+.label-ready_for_pickup a {
+  color: white !important;
+}
+
+.label-shipped_for_pickup {
+  background-color: #7DB942;
+}
+.label-shipped_for_pickup a {
+  color: white !important;
+}
