@@ -4,6 +4,7 @@ function PickupListBuilder(pickupLocations) {
 
 PickupListBuilder.prototype.init = function() {
   this.initializeList();
+  $('#pickup_location_' + $('.pickup_id').val()).attr('checked', true)
 };
 
 PickupListBuilder.prototype.initializeList = function() {

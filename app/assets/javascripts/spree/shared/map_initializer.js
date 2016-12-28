@@ -7,17 +7,19 @@ function MapInitializer(default_country, data) {
 }
 
 MapInitializer.prototype.init = function() {
-   this.map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 44.540, lng: -78.546},
-                zoom: 11
-              });
-   this.setCenter();
-   this.bindEvent();
-   if(this.data.length) {
-     this.mapToggleBtn.removeClass('hide');
-   } else if(!this.mapToggleBtn.hasClass('hide')) {
-     this.mapToggleBtn.addClass('hide');
-   }
+  this.bindEvent();
+  if(this.data.length) {
+   this.mapToggleBtn.removeClass('hide');
+  } else if(!this.mapToggleBtn.hasClass('hide')) {
+   this.mapToggleBtn.addClass('hide');
+  }
+};
+
+MapInitializer.prototype.initializeMap = function() {
+  this.map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 44.540, lng: -78.546},
+              zoom: 11
+             });
 };
 
 MapInitializer.prototype.bindEvent = function() {
@@ -25,6 +27,7 @@ MapInitializer.prototype.bindEvent = function() {
   this.mapToggleBtn.on('click', function() {
     _this.mapDiv.toggleClass('hide');
     if(!_this.mapDiv.hasClass('hide')) {
+      _this.initializeMap();
       _this.setCenter();
       _this.setMarker();
     }

@@ -75,8 +75,8 @@
         </div>
       </div>
     </div>
-    <% ship_kls = @order.ship_address && @order.ship_address.persisted? ? 'in active' : '' %>
-    <% pickup_kls = @order.pickup_address && @order.pickup_address.persisted? ? 'in active' : '' %>
+    <% ship_kls = @order.pickup? && @order.pickup_location.persisted? ? '' : 'in active' %>
+    <% pickup_kls = @order.pickup? && @order.pickup_location.persisted? ? 'in active' : '' %>
     <div class="panel-group" id="accordion">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -106,7 +106,6 @@
                   </span>
                 </div>
                 <%= render partial: 'spree/admin/shared/address_form', locals: { f: sa_form, type: 'shipping' } %>
-                <%= sa_form.hidden_field :_destroy, class: "_destroy_ship" %>
               <% end %>
             <% else %>
               <%= render partial: 'spree/admin/shared/pickup_address', locals: { address: @order.ship_address } %>

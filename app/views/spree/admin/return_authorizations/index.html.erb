@@ -1,7 +1,8 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: :return_authorizations } %>
+<% any_shipment_finalized  = @order.shipments.any? { |shipment| shipment.finalized? } %>
 
 <% content_for :page_actions do %>
-  <% if @order.shipments.any?(&:delivered?) && can?(:create, Spree::ReturnAuthorization) %>
+  <% if any_shipment_finalized && can?(:create, Spree::ReturnAuthorization) %>
     <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), class: "btn-success", icon: 'add' %>
   <% end %>
 <% end %>
@@ -10,7 +11,7 @@
   / <%= Spree.t(:return_authorizations) %>
 <% end %>
 
-<% if @order.shipments.any?(&:delivered?) && @order.return_authorizations.any? %>
+<% if any_shipment_finalized && @order.return_authorizations.any? %>
   <table class="table">
     <thead data-hook="rma_header">
       <tr>
@@ -42,7 +43,7 @@
       <% end %>
     </tbody>
   </table>
-<% elsif @order.shipments.any?(&:delivered?) %>
+<% elsif any_shipment_finalized %>
   <div class="alert alert-info no-objects-found">
     <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::ReturnAuthorization)) %>
   </div>
