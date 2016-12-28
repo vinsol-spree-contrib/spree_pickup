@@ -17,12 +17,16 @@ module Spree
 
     ##Callbacks
     before_save :create_timings, if: :open_day_ids_changed?
-    before_validation :update_geocode, if: ->{ my_address_changed? || address.new_record? }
+    before_validation :update_geocode, if: :geocode_updation_required?
     after_initialize :set_open_day_ids
 
     accepts_nested_attributes_for :address
 
     private
+
+      def geocode_updation_required?
+        my_address_changed? || address.new_record?
+      end
 
       def set_open_day_ids
         self.open_day_ids = self.open_day_ids_was = timings.map(&:day_id)
