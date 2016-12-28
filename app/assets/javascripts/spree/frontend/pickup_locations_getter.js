@@ -16,8 +16,6 @@ PickupLocationGetter.prototype.bindEvent = function() {
     var c_id = _this.countrySelect.val();
     path = _this.buildPath(s_id, c_id);
     $.get(path, function(data, status) {
-    //   _this.initializeModalBuilder(data);
-    //   _this.initializeMap(data);
     });
   });
 };

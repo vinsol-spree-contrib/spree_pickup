@@ -5,6 +5,25 @@ module Spree
 
       before_action :set_country, only: :new
 
+      def create
+        invoke_callbacks(:create, :before)
+        @object.attributes = permitted_resource_params
+        if @object.save!
+          invoke_callbacks(:create, :after)
+          flash[:success] = flash_message_for(@object, :successfully_created)
+          respond_with(@object) do |format|
+            format.html { redirect_to location_after_save }
+            format.js   { render layout: false }
+          end
+        else
+          invoke_callbacks(:create, :fails)
+          respond_with(@object) do |format|
+            format.html { render action: :new }
+            format.js { render layout: false }
+          end
+        end
+      end
+
       private
         def set_country
           @pickup_location.address = Spree::Address.build_default
