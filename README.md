@@ -26,21 +26,6 @@ SpreePickup is an extension and one stop solution to integrate pickup functional
     bundle exec rails g spree_pickup:install
     ```
 
-3. Working
----
-
-* A gift card is created by default when you seed data. Admin can also create `gift card` through
-
-    `Admin -> Products -> New`
-
-    while creating a new gift card, check `is gift card`, which means the product is gift card.
-* Once gift card is created, it is visible to customer.
-* One needs to add gift card shipping category to a shipping method to purchase a gift card.
-* When purchasing a gift card, a form is rendered to user, on which one can fill the `value`,`email`, `recipient name` and `note`. Once your order-payment is successfully captured, the gift card will be send to the email mentioned in gift card form.
-* The `Email` will contain details of gift card, amount, code, sender's email and note.
-* One can redeem the gift card by applying gift card code at payment step.
-
-**Here is a detailed article with screenshot http://vinsol.com/spreecommerce-gift-card**
 Contributing
 ------------
 
@@ -63,12 +48,6 @@ bundle exec rake test_app
 bundle exec rspec spec
 ```
 
-When testing your applications integration with this extension you may use it's factories.
-Simply add this require statement to your spec_helper:
-
-```ruby
-require 'spree_pickup/factories'
-```
 Credits
 -------
 
