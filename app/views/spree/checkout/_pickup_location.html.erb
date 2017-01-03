@@ -1,0 +1,34 @@
+<div class="col-md-6">
+  <div class="panel panel-default pickup-panel">
+    <div class="address vcard panel-body" data-id='<%= pickup_location.id %>'>
+      <span class="img-label">
+        <img src=<%="https://images-eu.ssl-images-amazon.com/images/G/31/x-site/cvs/map/location_"  + (pickup_location_counter + 1).to_s + "._CB138359918_.gif" %> class="index">
+      </span>
+      <div class="fn"><%= pickup_location.name %></div>
+      <div class="adr">
+        <div class="street-address">
+          <%= pickup_location.address.address1.to_s + ' ' + pickup_location.address.address2.to_s %>
+        </div>
+        <div class="local">
+          <span class="locality"><%= pickup_location.address.city %></span>
+          <span class="region"><%= pickup_location.address.state_text %></span>
+          <span class="zipcode"><%= pickup_location.address.zipcode %></span>
+          <span class="country"><%= pickup_location.address.country.try(:name) %></span>
+        </div>
+      </div>
+      <div class="tel">
+        <%= pickup_location.address.phone %>
+      </div>
+      <div class="open-day-timings">
+        <div class="days"><%= pickup_location.timings.map { |timing| Date::DAYNAMES[timing.day_id].slice(0, 3) }.to_sentence %></div>
+        <div class="timings"><%= pickup_location.start_time.to_s(:time) + '-' + pickup_location.end_time.to_s(:time) %></div>
+      </div>
+      <div class="funkyradio">
+        <div class="pull-right dispatch funkyradio-warning">
+          <input type="radio" name="pickup_location" id='pickup_location_<%= pickup_location.id%>'/>
+          <label for='pickup_location_<%= pickup_location.id%>'>Dispatch</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
