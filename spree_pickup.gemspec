@@ -2,13 +2,13 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_pickup'
-  s.version     = '3.0.9'
+  s.version     = '3.1.0'
   s.summary     = 'User can select pickup location for any of the order'
   s.description = 'User can select pickup location for any of the order'
   s.required_ruby_version = '>= 2.1.0'
 
   s.author    = 'Gurpreet Singh'
-  s.email     = 'gurpreet@vinsol.com'
+  s.email     = 'info@vinsol.com'
   # s.homepage  = 'http://www.spreecommerce.com'
   s.license = 'BSD-3'
 
@@ -17,7 +17,10 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 3.0.9'
+  s.add_dependency 'spree_api',         '~> 3.1.0'
+  s.add_dependency 'spree_backend',     '~> 3.1.0'
+  s.add_dependency 'spree_core',        '~> 3.1.0'
+  s.add_dependency 'spree_frontend',    '~> 3.1.0'
 
   s.add_development_dependency 'capybara', '~> 2.6'
   s.add_development_dependency 'coffee-rails'

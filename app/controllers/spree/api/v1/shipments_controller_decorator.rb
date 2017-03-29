@@ -1,4 +1,4 @@
-Spree::Api::ShipmentsController.class_eval do
+Spree::Api::V1::ShipmentsController.class_eval do
 
   def ship_for_pickup
     find_and_update_shipment
@@ -17,6 +17,5 @@ Spree::Api::ShipmentsController.class_eval do
     @shipment.deliver! if(@shipment.ready_for_pickup? || @shipment.shipped?)
     respond_with(@shipment, default_template: :show)
   end
-
 
 end
