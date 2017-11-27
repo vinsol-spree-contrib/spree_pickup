@@ -1,4 +1,4 @@
-class AddPickupLocationIdInOrder < ActiveRecord::Migration
+class AddPickupLocationIdInOrder < ActiveRecord::Migration[4.2]
   def change
     add_column :spree_orders, :pickup_location_id, :integer
     add_index :spree_orders, :pickup_location_id
