@@ -17,9 +17,9 @@ MapInitializer.prototype.init = function() {
 
 MapInitializer.prototype.initializeMap = function() {
   this.map = new google.maps.Map(document.getElementById('map'), {
-              center: {lat: 44.540, lng: -78.546},
-              zoom: 11
-             });
+    center: {lat: 44.540, lng: -78.546},
+    zoom: 11
+  });
 };
 
 MapInitializer.prototype.bindEvent = function() {

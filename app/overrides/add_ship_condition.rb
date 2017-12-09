@@ -16,16 +16,16 @@ Deface::Override.new(
       <% end %>
 
       <% if((shipment.shipped? || shipment.ready_for_pickup?) && shipment.inventory_units.where.not(state: "returned").any? and can?(:update, shipment)) %>
-        <%= link_to "Deliver", "javascript:;", class: "deliver pull-right btn btn-sm btn-success", data: { "shipment-number"=> shipment.number } %>
+        <%= link_to Spree.t(:deliver), "javascript:;", class: "deliver pull-right btn btn-sm btn-success", data: { "shipment-number"=> shipment.number } %>
         <div class="clearfix"></div>
       <% end %>
 
       <% if(@order.pickup? && (shipment.shipped_for_pickup? || shipment.ready?) && can?(:update, shipment)) %>
-        <%= link_to "Pick up Ready", "javascript:;", class: "pickup_ready pull-right btn-sm btn btn-success lm-5", data: { "shipment-number"=> shipment.number } %>
+        <%= link_to Spree.t(:pickup_ready), "javascript:;", class: "pickup_ready pull-right btn-sm btn btn-success lm-5", data: { "shipment-number"=> shipment.number } %>
       <% end %>
 
       <% if(@order.pickup? && shipment.ready? && can?(:update, shipment)) %>
-        <%= link_to "Shipped to Pickup Location", "javascript:;", class: "pickup_ship btn-sm pull-right btn btn-success", data: { "shipment-number"=> shipment.number } %>
+        <%= link_to Spree.t(:shipped_to_pickup_location), "javascript:;", class: "pickup_ship btn-sm pull-right btn btn-success", data: { "shipment-number"=> shipment.number } %>
       <% end %>
       <br/><br/>
 
