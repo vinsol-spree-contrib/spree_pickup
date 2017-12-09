@@ -6,12 +6,12 @@ Deface::Override.new(
           <div class="panel panel-default">
             <div class="panel-heading">
               <h1 class="panel-title">
-                Pickupable
+                <%= Spree.t(:pickup) %>
               </h1>
             </div>
 
             <div class="panel-body">
-              <%= f.check_box :pickupable %>
+              <%= f.check_box :pickupable  %>
               <%= f.label :pickupable %>
             </div>
           </div>

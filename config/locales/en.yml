@@ -1,12 +1,39 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      spree/pickup_location:
+        one: Pickup location
+        few: Pickup locations
+        many: Pickup locations
+        other: Pickup locations
+    attributes:
+      spree/pickup_location:
+        name: Name
+        address_id: Address
+        phone: Phone
+        longitute: Longitute
+        latitude: Latitude
+        start_time: Start time
+        end_time: End time
+      spree/shipping_method:
+        pickupable: Pickupable
   spree:
+    back_to_pickup_locations_list: Back to Pickup Locations list
+    deliver: Deliver
+    dispatch: Dispatch
     ensure_pickup_or_ship_address_present: Either Ship Address or Pickup Address must be present
     greater_than_start_time: must be greater than start time
+    new_pickup_location: New pickup location
+    open_days: Open days
+    pickup: Pickup
+    pickup_address: Pickup address
+    pickup_location: Pickup location
+    pickup_locations: Pickup locations
+    pickup_ready: Pick up Ready
     shipment_states:
       delivered: delivered
       ready_for_pickup: ready for pickup
       shipped_for_pickup: shipped for pickup
+    shipped_to_pickup_location: Shipped to Pickup Location
+    show_hide_map: Show/Hide Map
+

@@ -1,7 +1,7 @@
 function PickupLocationGetter(path) {
   this.path = path
-  this.stateSelect = $('#state .select22');
-  this.countrySelect = $('#country-select .select22');
+  this.stateSelect = $('#state .select2');
+  this.countrySelect = $('#country-select .select2');
 }
 
 PickupLocationGetter.prototype.init = function() {
@@ -12,8 +12,8 @@ PickupLocationGetter.prototype.bindEvent = function() {
   var _this = this;
   this.bindFetchStates();
   this.stateSelect.on('change', function(event) {
-    var s_id = _this.stateSelect.val();
-    var c_id = _this.countrySelect.val();
+    var s_id = _this.stateSelect.find(':selected').val();
+    var c_id = _this.countrySelect.find(':selected').val();
     path = _this.buildPath(s_id, c_id);
     $.get(path, function(data, status) {
       _this.initializeModalBuilder(data);

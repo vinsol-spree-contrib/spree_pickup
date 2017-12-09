@@ -1,0 +1,38 @@
+ru:
+  activerecord:
+    models:
+      spree/pickup_location:
+        one: Пункт самовывоза
+        few: Пункта самовывоза
+        many: Пунктов самовывоза
+        other: Пункты самовывоза
+    attributes:
+      spree/pickup_location:
+        name: Название
+        address_id: Адрес
+        phone: Телефон
+        longitute: Долгота
+        latitude: Широта
+        start_time: Начало работы
+        end_time: Конец работы
+      spree/shipping_method:
+        pickupable: Самовывоз доступен
+  spree:
+    back_to_pickup_locations_list: Назад к пунктам самовывоза
+    deliver: Доставить
+    dispatch: Отгрузить
+    ensure_pickup_or_ship_address_present: Должен присутствовать адрес доставки или пункт самовывоза
+    greater_than_start_time: должна быть позже даты начала
+    new_pickup_location: Новый пункт самовывоза
+    open_days: Рабочие дни
+    pickup: Самовывоз
+    pickup_address: Адрес самовывоза
+    pickup_location: Пункт самовывоза
+    pickup_locations: Пункты самовывоза
+    pickup_ready: В пункте самовывоза
+    shipment_states:
+      delivered: Доставлен
+      ready_for_pickup: Готов для забора
+      shipped_for_pickup: Отправлен в пункт самовывоза
+    shipped_to_pickup_location: Отправлен в пункт самовывоза
+    show_hide_map: Показать/Скрыть карту

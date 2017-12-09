@@ -1,4 +1,4 @@
-class CreateSpreePickupLocations < ActiveRecord::Migration
+class CreateSpreePickupLocations < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_pickup_locations do |t|
       t.string   :name

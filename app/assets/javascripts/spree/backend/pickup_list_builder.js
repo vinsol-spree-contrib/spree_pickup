@@ -38,7 +38,7 @@ PickupListBuilder.prototype.buildPickupTemplate = function(index, pickupObject) 
       $pickupRadioDiv = $('<div/>', { class: 'funkyradio' }),
       $dispatchDiv = $('<div/>', { class: "pull-right dispatch funkyradio-warning" }),
       $radioInput = $('<input/>', {type: 'radio', name: "pickup_location", id: ('pickup_location_' + pickupObject.id) } ),
-      $radioLabel = $('<label/>', { for: ('pickup_location_' + pickupObject.id), text: 'Dispatch' });
+      $radioLabel = $('<label/>', { for: ('pickup_location_' + pickupObject.id), text: Spree.translations.dispatch });
 
   $localAddressDiv.append($localitySpan, $regionSpan, $zipcodeSpan, $countrySpan);
   $adrDiv.append($streetAddressDiv, $localAddressDiv);
@@ -57,12 +57,16 @@ PickupListBuilder.prototype.imageUrlBuilder = function(value) {
 
 PickupListBuilder.prototype.timeDecorator = function(object) {
   var startTime = new Date(object.start_time);
-  var endTime = new Date(object.end_time)
-  return(startTime.getHours() + ':' + startTime.getMinutes() + " - " + endTime.getHours() + ':' + endTime.getMinutes() )
+  var endTime   = new Date(object.end_time)
+  var startHours   = ('0' + startTime.getHours()).slice(-2)
+  var startMinutes = ('0' + startTime.getMinutes()).slice(-2)
+  var endHours     = ('0' + endTime.getHours()).slice(-2)
+  var endMinutes   = ('0' + endTime.getMinutes()).slice(-2)
+  return(startHours + ':' + startMinutes + " - " + endHours + ':' + endMinutes )
 };
 
 PickupListBuilder.prototype.daysDecorator = function(object) {
-  var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+  var days = Spree.translations.abbr_day_names;
   return object.timings.map(function(data) {
     return(days[data.day_id]);
   }).join(', ');

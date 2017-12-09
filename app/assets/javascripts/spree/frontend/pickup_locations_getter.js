@@ -1,7 +1,7 @@
 function PickupLocationGetter(path) {
   this.path = path
-  this.stateSelect = $('#state .select22');
-  this.countrySelect = $('#country-select .select22');
+  this.stateSelect = $('#state .select2');
+  this.countrySelect = $('#country-select .select2');
 }
 
 PickupLocationGetter.prototype.init = function() {

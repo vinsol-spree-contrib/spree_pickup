@@ -5,6 +5,8 @@ module Spree
 
       before_action :set_country, only: :new
 
+      helper Spree::PickupHelper
+
       def create
         invoke_callbacks(:create, :before)
         @object.attributes = permitted_resource_params

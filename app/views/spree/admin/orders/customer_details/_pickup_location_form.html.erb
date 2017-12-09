@@ -7,17 +7,17 @@
     <div class="form-group col-md-4" data-hook="pickup_location_country">
       <%= label_tag :country_id, Spree.t(:country) %>
       <span id="country-select">
-        <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: selected_country_id}, { class: "select22 select-width" } %>
+        <%= collection_select :pickup_location, :country_id, available_countries, :id, :name, {selected: selected_country_id}, { class: "select2" } %>
       </span>
     </div>
     <div class="form-group col-md-4" data-hook="pickup_location_state">
       <%= label_tag :state_id, Spree.t(:state) %>
       <span id="state" class="region">
-        <%= collection_select :pickup_location, :state_id, selected_country_states, :id, :name, { selected: selected_state_id, include_blank: true }, { class: "select22 select-width", style: ""} %>
+        <%= collection_select :pickup_location, :state_id, selected_country_states, :id, :name, { selected: selected_state_id, include_blank: true }, { class: "select2", style: ""} %>
       </span>
     </div>
     <div class='col-md-2'>
-      <a href="javascript:void(0)" class=' btn btn-warning toggle-map btn-xs hide'>Show/Hide Map</a>
+      <a href="javascript:void(0)" class=' btn btn-warning toggle-map btn-xs hide'><%= Spree.t(:show_hide_map) %></a>
     </div>
     <%=f.hidden_field :pickup_location_id, class: 'pickup_id'%>
   </div>
@@ -34,12 +34,13 @@
   <%=javascript_include_tag "spree/backend/pickup_locations_getter"%>
   <%=javascript_include_tag "spree/shared/map_initializer"%>
   <%=javascript_include_tag "spree/backend/pickup_list_builder"%>
+  <%=javascript_include_tag "spree/backend/pickup_translations"%>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.secrets.google_map_key%>"
     ></script>
   <%= javascript_tag do %>
     $(function(){
       var pickupCheckout = new PickupCheckout($('#pickup_address'), $('#shipping_address'));
-      var pickupLocationGetter = new PickupLocationGetter('<%= api_pickup_locations_search_path %>');
+      var pickupLocationGetter = new PickupLocationGetter('<%= api_v1_pickup_locations_search_path %>');
       pickupLocationGetter.init();
       <% if pickup_location_present %>
         $('#state').find('select').trigger('change');
