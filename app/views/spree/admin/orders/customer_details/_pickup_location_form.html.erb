@@ -39,7 +39,7 @@
   <%= javascript_tag do %>
     $(function(){
       var pickupCheckout = new PickupCheckout($('#pickup_address'), $('#shipping_address'));
-      var pickupLocationGetter = new PickupLocationGetter('<%= api_pickup_locations_search_path %>');
+      var pickupLocationGetter = new PickupLocationGetter('<%= api_v1_pickup_locations_search_path %>');
       pickupLocationGetter.init();
       <% if pickup_location_present %>
         $('#state').find('select').trigger('change');

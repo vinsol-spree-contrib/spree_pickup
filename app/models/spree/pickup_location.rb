@@ -10,13 +10,16 @@ module Spree
     has_many :timings, dependent: :destroy, class_name: 'Spree::Timing'
 
     ##Validations
-    validates :longitude, :latitude, :name, :address, :start_time, :end_time, presence: true
+    validates :name, :address, :start_time, :end_time, presence: true
+    validates :timings, presence: { message: 'is required. Please enter open days.' }
+    validates :longitude, :latitude, presence: { message: "can't be blank. Please enter valid address." }
     validate :end_time_must_be_greater_than_start_time
+    validates_associated :address
 
     geocoded_by :full_address
 
     ##Callbacks
-    before_save :create_timings, if: :open_day_ids_changed?
+    before_validation :create_timings, if: :open_day_ids_changed?
     before_validation :update_geocode, if: :geocode_updation_required?
     after_initialize :set_open_day_ids
 
@@ -25,7 +28,7 @@ module Spree
     private
 
       def geocode_updation_required?
-        my_address_changed? || address.new_record?
+        address.valid? && (my_address_changed? || address.new_record?)
       end
 
       def set_open_day_ids
@@ -54,7 +57,9 @@ module Spree
       end
 
       def end_time_must_be_greater_than_start_time
-        errors[:end_time] << Spree.t(:greater_than_start_time) if start_time >= end_time
+        if start_time && end_time && start_time >= end_time
+          errors.add(:end_time, Spree.t(:greater_than_start_time))
+        end
       end
 
       def open_day_ids_changed?
