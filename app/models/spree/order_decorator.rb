@@ -4,7 +4,7 @@ Spree::Order.class_eval do
 
   before_save :clone_pickup_address, if: :pickup_location_changed?
 
-  SHIPMENT_STATES = %w(backorder canceled partial pending ready shipped delivered)
+  Spree::Order::SHIPMENT_STATES += %w(delivered)
 
   def pickup_address
     ship_address
