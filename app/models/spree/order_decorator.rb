@@ -2,7 +2,7 @@ Spree::Order.class_eval do
 
   belongs_to :pickup_location, class_name: Spree::PickupLocation.to_s
 
-  before_save :clone_pickup_address, if: :pickup_location_changed?
+  before_validation :clone_pickup_address, if: :pickup_location_changed?
 
   Spree::Order::SHIPMENT_STATES += %w(delivered)
 
@@ -25,7 +25,7 @@ Spree::Order.class_eval do
   private
 
     def clone_pickup_address
-      if pickup_location and self.ship_address.nil?
+      if pickup_location and self.ship_address.blank?
         self.ship_address = pickup_location.address.clone
       end
     end
