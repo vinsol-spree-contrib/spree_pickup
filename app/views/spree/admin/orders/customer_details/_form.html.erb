@@ -75,8 +75,8 @@
         </div>
       </div>
     </div>
-    <% ship_kls = @order.pickup? && @order.pickup_location.persisted? ? '' : 'in active' %>
-    <% pickup_kls = @order.pickup? && @order.pickup_location.persisted? ? 'in active' : '' %>
+    <% ship_kls = @order.pickup? && @order.pickup_location.try(:persisted?) ? '' : 'in active' %>
+    <% pickup_kls = @order.pickup? && @order.pickup_location.try(:persisted?) ? 'in active' : '' %>
     <div class="panel-group" id="accordion">
       <div class="panel panel-default">
         <div class="panel-heading">
