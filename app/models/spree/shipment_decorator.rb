@@ -16,7 +16,7 @@ Spree::Shipment.class_eval do
       transition from: [:ready, :canceled], to: :ready_for_pickup
       transition from: :shipped_for_pickup, to: :ready_for_pickup
     end
-    after_transition rom: [:ready, :canceled], to: :ready_for_pickup, do: :after_ship
+    after_transition from: [:ready, :canceled], to: :ready_for_pickup, do: :after_ship
 
     event :deliver do
       transition from: [:ready_for_pickup, :shipped], to: :delivered
@@ -29,6 +29,17 @@ Spree::Shipment.class_eval do
 
   def finalized?
     self.class::FINALIZED_STATES.include?(state)
+  end
+
+  def determine_state(order)
+    return 'canceled' if order.canceled?
+    return 'pending' unless order.can_ship?
+    return 'pending' if inventory_units.any? &:backordered?
+    return 'shipped' if shipped?
+    return 'ready_for_pickup' if ready_for_pickup?
+    return 'shipped_for_pickup' if shipped_for_pickup?
+    return 'delivered' if delivered?
+    order.paid? || Spree::Config[:auto_capture_on_dispatch] ? 'ready' : 'pending'
   end
 
   private

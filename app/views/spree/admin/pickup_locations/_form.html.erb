@@ -11,18 +11,18 @@
   <%=f.fields_for :address do |f|%>
 
   <div class="form-group" data-hook="pickup_location_first_name">
-    <%= f.label :first_name, 'First Name' %>
-    <%= f.text_field :first_name, class: 'form-control' %>
+    <%= f.label :firstname, Spree.t(:first_name)  %> <span class="required">*</span><br />
+    <%= f.text_field :firstname, class: 'form-control', required: true %>
   </div>
 
   <div class="form-group" data-hook="pickup_location_last_name">
-    <%= f.label :last_name, 'Last Name' %>
-    <%= f.text_field :last_name, class: 'form-control' %>
+    <%= f.label :lastname, Spree.t(:last_name) %> <span class="required">*</span><br />
+    <%= f.text_field :lastname, class: 'form-control', required: true %>
   </div>
 
   <div class="form-group" data-hook="pickup_location_address1">
-    <%= f.label :address1, Spree.t(:street_address) %>
-    <%= f.text_field :address1, class: 'form-control' %>
+    <%= f.label :address1, Spree.t(:street_address) %> <span class="required">*</span><br />
+    <%= f.text_field :address1, class: 'form-control', required: true %>
   </div>
 
   <div class="form-group" data-hook="pickup_location_address2">
@@ -31,50 +31,48 @@
   </div>
 
   <div class="form-group" data-hook="pickup_location_city">
-    <%= f.label :city, Spree.t(:city) %>
-    <%= f.text_field :city, class: 'form-control' %>
+    <%= f.label :city, Spree.t(:city) %> <span class="required">*</span><br />
+    <%= f.text_field :city, class: 'form-control', required: true %>
   </div>
 
   <div class="form-group" data-hook="pickup_location_zipcode">
-    <%= f.label :zipcode, Spree.t(:zip) %>
-    <%= f.text_field :zipcode, class: 'form-control' %>
+    <%= f.label :zipcode, Spree.t(:zip) %> <span class="required">*</span><br />
+    <%= f.text_field :zipcode, class: 'form-control', required: true %>
   </div>
 
   <div class="form-group" data-hook="pickup_location_phone">
-    <%= f.label :phone, Spree.t(:phone) %>
-    <%= f.phone_field :phone, class: 'form-control' %>
+    <%= f.label :phone, Spree.t(:phone) %> <span class="required">*</span><br />
+    <%= f.phone_field :phone, class: 'form-control', required: true %>
   </div>
   <div class="form-group" data-hook="pickup_location_country">
-    <%= f.label :country_id, Spree.t(:country) %>
+    <%= f.label :country_id, Spree.t(:country) %> <span class="required">*</span><br />
     <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2' } %></span>
   </div>
 
   <div class="form-group" data-hook="pickup_location_state">
     <% if f.object.country %>
-      <%= f.label :state_id, Spree.t(:state) %>
+      <%= f.label :state_id, Spree.t(:state) %> <span class="required">*</span><br />
       <span id="state" class="region">
-        <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty?} %>
+        <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2', style: "#{f.object.country.states.empty? ? 'display: none;' : '' };", disabled: f.object.country.states.empty? } %>
       </span>
     <% end %>
   </div>
   <%end%>
 
-
   <%= f.field_container :open_day_ids, class: ['form-group'] do %>
     <%= f.label :open_day_ids, 'Open Days' %>
-    <%#f.object.open_day_ids = Date::DAYNAMES.zip((0..6).to_a)%>
-    <%= f.select :open_day_ids, Date::DAYNAMES.zip((0..6).to_a), { selected: (0..6).to_a}, { multiple: true, class: "select2" } %>
+    <%= f.select :open_day_ids, Date::DAYNAMES.zip((0..6).to_a), { selected: f.object.timings.map(&:day_id) }, { multiple: true, class: "select2" } %>
   <% end %>
 
   <div class="form-group col-md-6">
-    <%= f.label :start_time %>
-    <%= f.time_field :start_time %>
+    <%= f.label :start_time %> <span class="required">*</span><br />
+    <%= f.time_field :start_time, required: true %>
   </div>
   <div class="form-group col-md-6">
-    <%= f.label :end_time %>
-    <%= f.time_field :end_time %>
+    <%= f.label :end_time %> <span class="required">*</span><br />
+    <%= f.time_field :end_time, required: true %>
   </div>
-  
+
 </div>
 
 <% content_for :head do %>

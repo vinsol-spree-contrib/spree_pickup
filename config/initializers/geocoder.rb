@@ -8,5 +8,11 @@ Geocoder.configure(
   timeout: 3,
 
   # default units
-  units: :km
+  units: :km,
+
+  #api_key
+  key: Rails.application.secrets.google_geocode_api_key,
+
+  #use_https
+  use_https: true
 )
