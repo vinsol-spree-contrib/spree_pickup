@@ -16,12 +16,6 @@ Deface::Override.new(
   virtual_path: 'spree/admin/return_authorizations/index',
   name: 'change shipping conditions in return_authorizations',
   replace: "erb[silent]:contains('if @order.shipments.any?(&:shipped?) && @order.return_authorizations.any?')",
-  text: " <% if any_shipment_finalized && @order.return_authorizations.any? %> "
-)
-
-Deface::Override.new(
-  virtual_path: 'spree/admin/return_authorizations/index',
-  name: 'change elsif conditions in return_authorizations',
-  replace: "erb[silent]:contains('elsif @order.shipments.any?(&:shipped?)')",
-  text: " <% elsif any_shipment_finalized %> "
+  closing_selector: 'erb[silent]:contains(" end ")',
+  partial: 'spree/admin/return_authorizations/conditions'
 )
