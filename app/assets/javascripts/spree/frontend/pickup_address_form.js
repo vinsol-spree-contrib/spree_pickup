@@ -1,9 +1,9 @@
-function CheckoutAddressManager(options) {
+function PickupAddressForm(options) {
   this.$shippingForm = options.$shippingForm;
   this.$fields = options.$fields;
 }
 
-CheckoutAddressManager.prototype.initialize = function() {
+PickupAddressForm.prototype.initialize = function() {
   this.$shippingForm.find(this.$fields).removeAttr('required');
 }
 
@@ -12,7 +12,7 @@ $(document).ready(function() {
     $shippingForm: $('[data-hook="shipping_inner"]'),
     $fields: '.form-control'
   },
-     checkoutAddressManager = new CheckoutAddressManager(options);
+     pickupAddressForm = new PickupAddressForm(options);
 
-  checkoutAddressManager.initialize();
+  pickupAddressForm.initialize();
 });
