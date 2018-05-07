@@ -2,5 +2,20 @@ var pickupLocationWrapper = $("[data-hook='pickup_locations_wrapper' ]");
 pickupLocationWrapper.empty();
 pickupLocationWrapper.append("<%= j render partial: 'spree/checkout/pickup_location', collection: @base_scope %>");
 var mapInitializer = new MapInitializer('<%= (@state.name + ', ' + @country.name) %>' , <%= raw @base_scope.map(&:attributes).to_json %>);
+mapInitializer.mapToggleBtn.unbind("click"); // remove previous click event
 mapInitializer.init();
+
+var $pickupLocationMessageContainer = $('[data-hook="pickup_location_message"]');
+
+<% unless @base_scope.empty? %>
+  $pickupLocationMessageContainer.addClass('hidden');
+  mapInitializer.mapDiv.removeClass('hide');
+  mapInitializer.initializeMap();
+  mapInitializer.setCenter();
+  mapInitializer.setMarker();
+<% else %>
+  $pickupLocationMessageContainer.removeClass('hidden');
+  mapInitializer.mapDiv.addClass('hide');
+<% end %>
+
 $('#pickup_location_' + $('.pickup_id').val()).attr('checked', true)

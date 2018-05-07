@@ -116,6 +116,9 @@
           <div class="panel-body">
             <%= render partial: 'pickup_location_form', locals: { f: f } %>
           </div>
+          <div class="hidden bg bg-danger" data-hook="pickup_location_message">
+            <p> There are no pickup locations present </p>
+          </div>
         </div>
       </div>
     </div>
