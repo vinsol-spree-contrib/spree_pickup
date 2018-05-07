@@ -1,16 +1,3 @@
-<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: :return_authorizations } %>
-<% any_shipment_finalized  = @order.shipments.any? { |shipment| shipment.finalized? } %>
-
-<% content_for :page_actions do %>
-  <% if any_shipment_finalized && can?(:create, Spree::ReturnAuthorization) %>
-    <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order), class: "btn-success", icon: 'add' %>
-  <% end %>
-<% end %>
-
-<% content_for :page_title do %>
-  / <%= Spree.t(:return_authorizations) %>
-<% end %>
-
 <% if any_shipment_finalized && @order.return_authorizations.any? %>
   <table class="table">
     <thead data-hook="rma_header">

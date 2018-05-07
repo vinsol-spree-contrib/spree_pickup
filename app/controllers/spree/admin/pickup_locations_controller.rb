@@ -8,7 +8,7 @@ module Spree
       def create
         invoke_callbacks(:create, :before)
         @object.attributes = permitted_resource_params
-        if @object.save!
+        if @object.save
           invoke_callbacks(:create, :after)
           flash[:success] = flash_message_for(@object, :successfully_created)
           respond_with(@object) do |format|

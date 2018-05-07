@@ -68,14 +68,9 @@ MapInitializer.prototype.imageUrlBuilder = function(value) {
 
 MapInitializer.prototype.setCenter = function() {
   var _this = this;
-  if(_this.default_country) {
-    this.geocoder.geocode( { 'address': _this.default_country }, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        _this.map.setCenter(results[0].geometry.location);
-      }
-    });
-  } else {
-    _this.setToCurrentLocation();
+
+  if(this.data) {
+    this.map.setCenter({ lat: _this.data[0].latitude, lng: _this.data[0].longitude });
   }
 };
 

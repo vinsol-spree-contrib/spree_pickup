@@ -1,0 +1,69 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <ul class="nav nav-tabs nav-justified">
+        <li>
+          <strong><%= Spree.t(:billing_address) %></strong>
+        </li>
+      </ul>
+    </h4>
+  </div>
+  <div id="billing_address" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <% if can? :edit, @order.user %>
+        <%= f.fields_for :bill_address do |ba_form| %>
+          <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "billing" } %>
+        <% end %>
+      <% else %>
+        <%= render partial: 'spree/admin/shared/address', locals: { address: @order.bill_address } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% ship_kls = @order.pickup? && @order.pickup_location.try(:persisted?) ? '' : 'in active' %>
+<% pickup_kls = @order.pickup? && @order.pickup_location.try(:persisted?) ? 'in active' : '' %>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <ul class="nav nav-tabs nav-justified">
+          <li class= "<%= ship_kls %>">
+            <a data-toggle="collapse" data-parent="#accordion" href="#shipping_address" id='shipping_address_link'>
+              <strong><%= Spree.t(:shipping_address) %></strong>
+            </a>
+          </li>
+          <li class= "<%= pickup_kls %>">
+            <a data-toggle="collapse" data-parent="#accordion" href="#pickup_address" id='pickup_address_link'>
+              <strong><%= Spree.t(:pickup_address) %></strong>
+            </a>
+          </li>
+        </ul>
+      </h4>
+    </div>
+    <div id="shipping_address" class="panel-collapse collapse <%= ship_kls %>" >
+      <div class="panel-body">
+        <% if can? :edit, @order.user %>
+          <%= f.fields_for :ship_address do |sa_form| %>
+            <div class="form-group">
+              <span data-hook="use_billing">
+                <%= check_box_tag 'order[use_billing]', '1', ((@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address.same_as?(@order.ship_address)) %>
+                <%= label_tag 'order[use_billing]', Spree.t(:use_billing_address) %>
+              </span>
+            </div>
+            <%= render partial: 'spree/admin/shared/address_form', locals: { f: sa_form, type: 'shipping' } %>
+          <% end %>
+        <% else %>
+          <%= render partial: 'spree/admin/shared/pickup_address', locals: { address: @order.ship_address } %>
+        <% end %>
+      </div>
+    </div>
+    <div id="pickup_address" class="panel-collapse collapse <%= pickup_kls %>">
+      <div class="panel-body">
+        <%= render partial: 'pickup_location_form', locals: { f: f } %>
+      </div>
+      <div class="hidden bg bg-danger" data-hook="pickup_location_message">
+        <p> There are no pickup locations present </p>
+      </div>
+    </div>
+  </div>
+</div>
