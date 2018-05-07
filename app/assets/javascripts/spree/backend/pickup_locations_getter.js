@@ -14,10 +14,19 @@ PickupLocationGetter.prototype.bindEvent = function() {
   this.stateSelect.on('change', function(event) {
     var s_id = _this.stateSelect.val();
     var c_id = _this.countrySelect.val();
+    var $pickupLocationMessageContainer = $('[data-hook="pickup_location_message"]');
+    var $mapWrapper = $('[data-hook="map_wrapper"]');
     path = _this.buildPath(s_id, c_id);
     $.get(path, function(data, status) {
       _this.initializeModalBuilder(data);
-      _this.initializeMap(data);
+      if (data.length > 0) {
+        $pickupLocationMessageContainer.addClass('hidden');
+        $mapWrapper.show();
+        _this.initializeMap(data);
+      } else {
+        $pickupLocationMessageContainer.removeClass('hidden');
+        $mapWrapper.hide();
+      }
     });
   });
 };
@@ -62,7 +71,11 @@ PickupLocationGetter.prototype.buildPath = function(s_id, c_id) {
 
 PickupLocationGetter.prototype.initializeMap = function(data) {
   var mI = new MapInitializer(this.stateSelect.find(':selected').text() + ', ' + this.countrySelect.find(':selected').text(), data);
+  mI.mapToggleBtn.unbind("click"); // remove previous click event
   mI.init();
+  mI.initializeMap();
+  mI.setCenter();
+  mI.setMarker();
 };
 
 PickupLocationGetter.prototype.initializeModalBuilder = function(data) {
