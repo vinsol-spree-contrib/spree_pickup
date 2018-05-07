@@ -9,6 +9,16 @@ SpreePickup is an extension and one stop solution to integrate pickup functional
 
 * This extension adds new states `ready_for_pickup` and `shipped_for_pickup`. An order is in `read_for_pickup` when the order has arrived at pickup location while order is in `shipped_for_pickup` state when the order has been shipped from warehouse/store to the pickup location.
 
+Demo
+----
+Try Spree Pickup for Spree master with direct deployment on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vinsol-spree-contrib/spree-demo-heroku/tree/spree-pickup-master)
+
+Try Spree Pickup for Spree 3-4 with direct deployment on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vinsol-spree-contrib/spree-demo-heroku/tree/spree-pickup-3-4)
+
 ## Installation
 
 1. Just add this line to your `Gemfile`:

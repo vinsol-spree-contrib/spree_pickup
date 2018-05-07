@@ -4,3 +4,4 @@ Rails.application.config.assets.precompile += %w( spree/shared/spree_states_fetc
 Rails.application.config.assets.precompile += %w( spree/backend/pickup_list_builder.js)
 Rails.application.config.assets.precompile += %w( spree/backend/pickup_locations_getter.js)
 Rails.application.config.assets.precompile += %w( spree/frontend/pickup_locations_getter.js)
+Rails.application.config.assets.precompile += %w( spree/frontend/pickup_address_form.js)
