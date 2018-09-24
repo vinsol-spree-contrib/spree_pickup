@@ -36,6 +36,12 @@ Try Spree Pickup for Spree 3-4 with direct deployment on Heroku:
     bundle exec rails g spree_pickup:install
     ```
 
+## See It In Action
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=FEtDsCeDRhs
+" target="_blank"><img src="http://img.youtube.com/vi/FEtDsCeDRhs/0.jpg" 
+alt="Youtube Video Tutorial" /></a>
+
 Contributing
 ------------
 
